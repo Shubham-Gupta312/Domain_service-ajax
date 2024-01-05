@@ -76,6 +76,12 @@
         color: #060606;
     }
 
+    .table-bordered th,
+    .table-bordered td {
+
+        text-align: center;
+    }
+
     #logout a {
         color: #333;
     }
@@ -439,8 +445,8 @@
                                             <div class="col-md-5">
                                                 <div class="mb-3">
                                                     <label for="expiryDate" class="form-label">Expiry Date</label>
-                                                    <input type="date" class="form-control" readonly name="hosting_expiry"
-                                                        id="Vhosting_expiry">
+                                                    <input type="date" class="form-control" readonly
+                                                        name="hosting_expiry" id="Vhosting_expiry">
                                                     <div class="invalid-feedback" class="text-danger"
                                                         id="hosting_expiry_msg"></div>
                                                 </div>
