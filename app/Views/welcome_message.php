@@ -85,6 +85,13 @@
     #logout a {
         color: #333;
     }
+    .box label{
+        font-size: 20px;
+    }
+    .box input[type="checkbox"]{
+        height: 20px;
+        width: 20px;
+    }
 </style>
 
 <body class="body counter-scroll dashboard show ">
@@ -149,108 +156,127 @@
                         <div class="modal-body">
                             <form id="formId">
                                 <div class="container-fluid">
-                                    <div class="row">
-                                        <h3>Domain Information</h3>
-                                        <div class="col-md-3">
-                                            <!-- Left Column -->
-                                            <div class="mb-3">
-                                                <label for="domainName" class="form-label">Domain Name</label>
-                                                <input type="text" class="form-control" id="domain_name"
-                                                    name="domain_name">
-                                                <div class="invalid-feedback" class="text-danger" id="domain_name_msg">
+                                    <div class="box m-4">
+                                        <label><input type="checkbox" class="checkbox m-2" value="hosting">Hosting</label>
+                                        <label><input type="checkbox" class="checkbox m-2" value="domain">Domain</label>
+                                        <label><input type="checkbox" class="checkbox m-2" value="ssl">SSL</label>
+                                        <br><br>
+                                    </div>
+                                    <div class="container" id="domainContainer" style="display: none;">
+                                        <div class="row">
+                                            <h3>Domain Information</h3>
+                                            <div class="col-md-3">
+                                                <!-- Left Column -->
+                                                <div class="mb-3">
+                                                    <label for="domainName" class="form-label">Domain Name</label>
+                                                    <input type="text" class="form-control" id="domain_name"
+                                                        name="domain_name">
+                                                    <div class="invalid-feedback" class="text-danger"
+                                                        id="domain_name_msg">
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="expiryDate" class="form-label">Domain Expiry
+                                                        Date</label>
+                                                    <input type="date" class="form-control" name="domain_expiry"
+                                                        id="domain_expiry">
+                                                    <div class="invalid-feedback" class="text-danger"
+                                                        id="domain_expiry_msg"></div>
+                                                </div>
+                                                <!-- More domain-related fields can go here -->
+                                            </div>
+                                            <div class="col-md-3">
+                                                <!-- Right Column -->
+                                                <div class="mb-3">
+                                                    <label for="domainCost" class="form-label">Domain Cost</label>
+                                                    <input type="text" class="form-control" id="domain_cost"
+                                                        name="domain_cost">
+                                                    <div class="invalid-feedback" class="text-danger"
+                                                        id="domain_cost_msg">
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="sellingCost" class="form-label">Selling Cost</label>
+                                                    <input type="text" class="form-control" id="selling_cost"
+                                                        name="selling_cost">
+                                                    <div class="invalid-feedback" class="text-danger"
+                                                        id="selling_cost_msg">
+                                                    </div>
+                                                </div>
+                                                <!-- More domain-related fields can go here -->
+                                            </div>
+                                            <div class="col-md-3">
+                                                <!-- Left Column -->
+                                                <div class="mb-3">
+                                                    <label for="domainProvider" class="form-label">Domain
+                                                        Provider</label>
+                                                    <input type="text" class="form-control" id="domain_provider"
+                                                        name="domain_provider">
+                                                    <div class="invalid-feedback" class="text-danger"
+                                                        id="domain_provider_msg"></div>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="RegistrationDate" class="form-label">Domain Registration
+                                                        Date</label>
+                                                    <input type="date" class="form-control" name="domain_register"
+                                                        id="domain_register">
+                                                    <div class="invalid-feedback" class="text-danger"
+                                                        id="domain_register_msg"></div>
+                                                </div>
+                                                <!-- More domain-related fields can go here -->
+                                            </div>
+                                            <div class="col-md-3">
+                                                <!-- Right Column -->
+                                                <div class="mb-3">
+                                                    <label for="email" class="form-label">Registered Email</label>
+                                                    <input type="email" class="form-control" id="email" name="email">
+                                                    <div class="invalid-feedback" class="text-danger" id="email_msg">
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="contact" class="form-label">Phone/Mobile No.</label>
+                                                    <input type="text" class="form-control" id="phone" name="phone">
+                                                    <div class="invalid-feedback" class="text-danger" id="phone_msg">
+                                                    </div>
+                                                </div>
+                                                <!-- More domain-related fields can go here -->
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="mb-3">
+                                                    <label for="company" class="form-label">Company Name</label>
+                                                    <input type="text" class="form-control" id="company_name"
+                                                        name="company_name">
+                                                    <div class="invalid-feedback" class="text-danger"
+                                                        id="company_name_msg">
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="mb-3">
-                                                <label for="expiryDate" class="form-label">Domain Expiry Date</label>
-                                                <input type="date" class="form-control" name="domain_expiry"
-                                                    id="domain_expiry">
-                                                <div class="invalid-feedback" class="text-danger"
-                                                    id="domain_expiry_msg"></div>
-                                            </div>
-                                            <!-- More domain-related fields can go here -->
-                                        </div>
-                                        <div class="col-md-3">
-                                            <!-- Right Column -->
-                                            <div class="mb-3">
-                                                <label for="domainCost" class="form-label">Domain Cost</label>
-                                                <input type="text" class="form-control" id="domain_cost"
-                                                    name="domain_cost">
-                                                <div class="invalid-feedback" class="text-danger" id="domain_cost_msg">
+                                            <div class="col-md-3">
+                                                <div class="mb-3">
+                                                    <label for="renewalDate" class="form-label">Domain Renewal
+                                                        Year</label>
+                                                    <input type="date" class="form-control" name="domain_renew"
+                                                        id="domain_renew">
+                                                    <div class="invalid-feedback" class="text-danger"
+                                                        id="domain_renew_msg">
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="mb-3">
-                                                <label for="sellingCost" class="form-label">Selling Cost</label>
-                                                <input type="text" class="form-control" id="selling_cost"
-                                                    name="selling_cost">
-                                                <div class="invalid-feedback" class="text-danger" id="selling_cost_msg">
-                                                </div>
-                                            </div>
-                                            <!-- More domain-related fields can go here -->
-                                        </div>
-                                        <div class="col-md-3">
-                                            <!-- Left Column -->
-                                            <div class="mb-3">
-                                                <label for="domainProvider" class="form-label">Domain Provider</label>
-                                                <input type="text" class="form-control" id="domain_provider"
-                                                    name="domain_provider">
-                                                <div class="invalid-feedback" class="text-danger"
-                                                    id="domain_provider_msg"></div>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="RegistrationDate" class="form-label">Domain Registration
-                                                    Date</label>
-                                                <input type="date" class="form-control" name="domain_register"
-                                                    id="domain_register">
-                                                <div class="invalid-feedback" class="text-danger"
-                                                    id="domain_register_msg"></div>
-                                            </div>
-                                            <!-- More domain-related fields can go here -->
-                                        </div>
-                                        <div class="col-md-3">
-                                            <!-- Right Column -->
-                                            <div class="mb-3">
-                                                <label for="email" class="form-label">Registered Email</label>
-                                                <input type="email" class="form-control" id="email" name="email">
-                                                <div class="invalid-feedback" class="text-danger" id="email_msg"></div>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="contact" class="form-label">Phone/Mobile No.</label>
-                                                <input type="text" class="form-control" id="phone" name="phone">
-                                                <div class="invalid-feedback" class="text-danger" id="phone_msg"></div>
-                                            </div>
-                                            <!-- More domain-related fields can go here -->
-                                        </div>
-                                        <div class="col-md-3">
-                                            <div class="mb-3">
-                                                <label for="company" class="form-label">Company Name</label>
-                                                <input type="text" class="form-control" id="company_name"
-                                                    name="company_name">
-                                                <div class="invalid-feedback" class="text-danger" id="company_name_msg">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <div class="mb-3">
-                                                <label for="renewalDate" class="form-label">Domain Renewal Year</label>
-                                                <input type="date" class="form-control" name="domain_renew"
-                                                    id="domain_renew">
-                                                <div class="invalid-feedback" class="text-danger" id="domain_renew_msg">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <div class="mb-3">
-                                                <label for="renewalDate" class="form-label">Client Name</label>
-                                                <input type="text" class="form-control" name="client_name"
-                                                    id="client_name">
-                                                <div class="invalid-feedback" class="text-danger" id="client_name_msg">
+                                            <div class="col-md-3">
+                                                <div class="mb-3">
+                                                    <label for="renewalDate" class="form-label">Client Name</label>
+                                                    <input type="text" class="form-control" name="client_name"
+                                                        id="client_name">
+                                                    <div class="invalid-feedback" class="text-danger"
+                                                        id="client_name_msg">
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="wrap-box d-flex">
-                                        <div class="container mt-2">
+                                        <div class="container" id="hostingContainer" style="display: none;">
                                             <h3>Hosting Information</h3>
                                             <div class="row">
                                                 <div class="col-md-5">
@@ -282,33 +308,33 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="container mt-2">
-                                            <h3>SSL</h3>
-                                            <div class="row">
-                                                <div class="col-md-5">
-                                                    <!-- Left Column -->
-                                                    <!-- <div class="mb-3">
+                                    </div>
+                                    <div class="container" id="sslContainer" style="display: none;">
+                                        <h3>SSL</h3>
+                                        <div class="row">
+                                            <div class="col-md-5">
+                                                <!-- Left Column -->
+                                                <!-- <div class="mb-3">
                                                     <label for="domainName" class="form-label">Domain Name</label>
                                                     <input type="text" class="form-control" id="domainName"
                                                         name="domain_Name">
                                                 </div> -->
-                                                    <div class="mb-3">
-                                                        <label for="expiryDate" class="form-label">SSL Expiry
-                                                            Date</label>
-                                                        <input type="date" class="form-control" id="ssl_expiry"
-                                                            name="ssl_expiry">
-                                                        <div class="invalid-feedback" class="text-danger"
-                                                            id="ssl_expiry_msg"></div>
-                                                    </div>
+                                                <div class="mb-3">
+                                                    <label for="expiryDate" class="form-label">SSL Expiry
+                                                        Date</label>
+                                                    <input type="date" class="form-control" id="ssl_expiry"
+                                                        name="ssl_expiry">
+                                                    <div class="invalid-feedback" class="text-danger"
+                                                        id="ssl_expiry_msg"></div>
                                                 </div>
-                                                <div class="col-md-5">
-                                                    <!-- Right Column -->
-                                                    <div class="mb-3">
-                                                        <label for="domainCost" class="form-label">SSL Cost</label>
-                                                        <input type="text" class="form-control" id="ssl_cost"
-                                                            name="ssl_cost">
-                                                        <div class="invalid-feedback" class="text-danger"
-                                                            id="ssl_cost_msg"></div>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <!-- Right Column -->
+                                                <div class="mb-3">
+                                                    <label for="domainCost" class="form-label">SSL Cost</label>
+                                                    <input type="text" class="form-control" id="ssl_cost"
+                                                        name="ssl_cost">
+                                                    <div class="invalid-feedback" class="text-danger" id="ssl_cost_msg">
                                                     </div>
                                                 </div>
                                             </div>
@@ -319,7 +345,11 @@
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary"
                                         data-bs-dismiss="modal">Close</button>
-                                    <button type="button" id="submit" class="btn btn-primary">Save</button>
+                                    <!-- <button type="button" id="submit" class="btn btn-primary">Save</button> -->
+                                    <div id="submitButton" style="display: none;">
+                                        <!-- Submit Button -->
+                                        <button type="button" id="submit" class="btn btn-primary">Submit</button>
+                                    </div>
                                 </div>
                             </form>
                         </div>
@@ -569,6 +599,38 @@
         </div>
     </div>
 
+    <!--  Hide/Show Container  -->
+
+    <script>
+        $(document).ready(function () {
+            $('.checkbox').change(function () {
+                var anyChecked = false;
+
+                $('.container').hide(); // Hide all containers initially
+
+                $('.checkbox:checked').each(function () {
+                    var selected = $(this).val();
+                    if (selected === 'hosting') {
+                        $('#hostingContainer').show();
+                    }
+                    if (selected === 'domain') {
+                        $('#domainContainer').show();
+                    }
+                    if (selected === 'ssl') {
+                        $('#sslContainer').show();
+                    }
+                    anyChecked = true;
+                });
+
+                if (anyChecked) {
+                    $('#submitButton').show();
+                } else {
+                    $('#submitButton').hide();
+                }
+            });
+        });
+    </script>
+
     <script>
         $(document).ready(function () {
             // Data Insertion
@@ -662,7 +724,7 @@
                         '<td>' + value['phone'] + '</td>' +
                         '<td>' + value['client_name'] + '</td>' +
                         '<td>' + value['email'] + '</td>' +
-                        '<td>' + '<a data-bs-toggle="modal" data-bs-target="#viewModal" class="view" >View</a>' + '</td>' +
+                        '<td>' + '<a href="#" data-bs-toggle="modal" data-bs-target="#viewModal" class="view" >View</a>' + '</td>' +
                         '</tr>');
                 });
             }
