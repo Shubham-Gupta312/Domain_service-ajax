@@ -1,6 +1,6 @@
 <head>
     <meta charset="utf-8">
-    <title>DreamHome - Real Estate HTML Template</title>
+    <title>Domain-Service</title>
 
     <meta name="author" content="themesflat.com">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -12,7 +12,7 @@
     <link rel="stylesheet" href=<?= ASSET_URL . "public/app/dist/owl.css" ?>>
 
     <!-- Favicon and Touch Icons  -->
-    <link rel="shortcut icon" href=<?= ASSET_URL . "public/assets/images/logo/Favicon.png" ?>>
+    <link rel="shortcut icon" href="https://www.savithru.com/assets/images/logo.png">
     <link rel="apple-touch-icon-precomposed" href=<?= ASSET_URL . "public/assets/images/logo/Favicon.png" ?>>
     <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

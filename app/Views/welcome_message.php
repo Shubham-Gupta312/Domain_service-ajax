@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>DreamHome - Real Estate HTML Template</title>
+    <title>Domain-Service</title>
 
     <meta name="author" content="themesflat.com">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -16,7 +16,7 @@
     <link rel="stylesheet" href=<?= ASSET_URL . "public/app/dist/owl.css" ?>>
 
     <!-- Favicon and Touch Icons  -->
-    <link rel="shortcut icon" href=<?= ASSET_URL . "public/assets/images/logo/Favicon.png" ?>>
+    <link rel="shortcut icon" href="https://www.savithru.com/assets/images/logo.png">
     <link rel="apple-touch-icon-precomposed" href=<?= ASSET_URL . "public/assets/images/logo/Favicon.png" ?>>
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -75,7 +75,8 @@
         background: #FFFEFE;
         color: #060606;
     }
-    #logout a{
+
+    #logout a {
         color: #333;
     }
 </style>
@@ -105,7 +106,7 @@
                                                 </div>
                                             </div>
                                             <div class="flat-bt-top sc-btn-top">
-                                                <span id="logout"><a href="<?= base_url('logout')?>">Log-out</a></span>
+                                                <span id="logout"><a href="<?= base_url('logout') ?>">Log-out</a></span>
                                             </div>
                                         </div>
                                     <?php else: ?>
@@ -131,8 +132,198 @@
                 </div>
             </div>
 
-            <!-- Modal -->
+            <!-- Add data Modal -->
             <div class="modal fade" id="showModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Domain Info:</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="formId">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <h3>Domain Information</h3>
+                                        <div class="col-md-3">
+                                            <!-- Left Column -->
+                                            <div class="mb-3">
+                                                <label for="domainName" class="form-label">Domain Name</label>
+                                                <input type="text" class="form-control" id="domain_name"
+                                                    name="domain_name">
+                                                <div class="invalid-feedback" class="text-danger" id="domain_name_msg">
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="expiryDate" class="form-label">Domain Expiry Date</label>
+                                                <input type="date" class="form-control" name="domain_expiry"
+                                                    id="domain_expiry">
+                                                <div class="invalid-feedback" class="text-danger"
+                                                    id="domain_expiry_msg"></div>
+                                            </div>
+                                            <!-- More domain-related fields can go here -->
+                                        </div>
+                                        <div class="col-md-3">
+                                            <!-- Right Column -->
+                                            <div class="mb-3">
+                                                <label for="domainCost" class="form-label">Domain Cost</label>
+                                                <input type="text" class="form-control" id="domain_cost"
+                                                    name="domain_cost">
+                                                <div class="invalid-feedback" class="text-danger" id="domain_cost_msg">
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="sellingCost" class="form-label">Selling Cost</label>
+                                                <input type="text" class="form-control" id="selling_cost"
+                                                    name="selling_cost">
+                                                <div class="invalid-feedback" class="text-danger" id="selling_cost_msg">
+                                                </div>
+                                            </div>
+                                            <!-- More domain-related fields can go here -->
+                                        </div>
+                                        <div class="col-md-3">
+                                            <!-- Left Column -->
+                                            <div class="mb-3">
+                                                <label for="domainProvider" class="form-label">Domain Provider</label>
+                                                <input type="text" class="form-control" id="domain_provider"
+                                                    name="domain_provider">
+                                                <div class="invalid-feedback" class="text-danger"
+                                                    id="domain_provider_msg"></div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="RegistrationDate" class="form-label">Domain Registration
+                                                    Date</label>
+                                                <input type="date" class="form-control" name="domain_register"
+                                                    id="domain_register">
+                                                <div class="invalid-feedback" class="text-danger"
+                                                    id="domain_register_msg"></div>
+                                            </div>
+                                            <!-- More domain-related fields can go here -->
+                                        </div>
+                                        <div class="col-md-3">
+                                            <!-- Right Column -->
+                                            <div class="mb-3">
+                                                <label for="email" class="form-label">Registered Email</label>
+                                                <input type="email" class="form-control" id="email" name="email">
+                                                <div class="invalid-feedback" class="text-danger" id="email_msg"></div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="contact" class="form-label">Phone/Mobile No.</label>
+                                                <input type="text" class="form-control" id="phone" name="phone">
+                                                <div class="invalid-feedback" class="text-danger" id="phone_msg"></div>
+                                            </div>
+                                            <!-- More domain-related fields can go here -->
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="mb-3">
+                                                <label for="company" class="form-label">Company Name</label>
+                                                <input type="text" class="form-control" id="company_name"
+                                                    name="company_name">
+                                                <div class="invalid-feedback" class="text-danger" id="company_name_msg">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="mb-3">
+                                                <label for="renewalDate" class="form-label">Domain Renewal Year</label>
+                                                <input type="date" class="form-control" name="domain_renew"
+                                                    id="domain_renew">
+                                                <div class="invalid-feedback" class="text-danger" id="domain_renew_msg">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="mb-3">
+                                                <label for="renewalDate" class="form-label">Client Name</label>
+                                                <input type="text" class="form-control" name="client_name"
+                                                    id="client_name">
+                                                <div class="invalid-feedback" class="text-danger" id="client_name_msg">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="wrap-box d-flex">
+                                        <div class="container mt-2">
+                                            <h3>Hosting Information</h3>
+                                            <div class="row">
+                                                <div class="col-md-5">
+                                                    <div class="mb-3">
+                                                        <label for="expiryDate" class="form-label">Expiry Date</label>
+                                                        <input type="date" class="form-control" name="hosting_expiry"
+                                                            id="hosting_expiry">
+                                                        <div class="invalid-feedback" class="text-danger"
+                                                            id="hosting_expiry_msg"></div>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="totalSpace" class="form-label">Hosting Space
+                                                            (GB)</label>
+                                                        <input type="text" class="form-control" id="hosting_space"
+                                                            name="hosting_space">
+                                                        <div class="invalid-feedback" class="text-danger"
+                                                            id="hosting_space_msg"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-5">
+                                                    <div class="mb-3">
+                                                        <label for="hostingCost" class="form-label">Hosting Cost</label>
+                                                        <input type="text" class="form-control" id="hosting_cost"
+                                                            name="hosting_cost">
+                                                        <div class="invalid-feedback" class="text-danger"
+                                                            id="hosting_cost_msg"></div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="container mt-2">
+                                            <h3>SSL</h3>
+                                            <div class="row">
+                                                <div class="col-md-5">
+                                                    <!-- Left Column -->
+                                                    <!-- <div class="mb-3">
+                                                    <label for="domainName" class="form-label">Domain Name</label>
+                                                    <input type="text" class="form-control" id="domainName"
+                                                        name="domain_Name">
+                                                </div> -->
+                                                    <div class="mb-3">
+                                                        <label for="expiryDate" class="form-label">SSL Expiry
+                                                            Date</label>
+                                                        <input type="date" class="form-control" id="ssl_expiry"
+                                                            name="ssl_expiry">
+                                                        <div class="invalid-feedback" class="text-danger"
+                                                            id="ssl_expiry_msg"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-5">
+                                                    <!-- Right Column -->
+                                                    <div class="mb-3">
+                                                        <label for="domainCost" class="form-label">SSL Cost</label>
+                                                        <input type="text" class="form-control" id="ssl_cost"
+                                                            name="ssl_cost">
+                                                        <div class="invalid-feedback" class="text-danger"
+                                                            id="ssl_cost_msg"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Close</button>
+                                    <button type="button" id="submit" class="btn btn-primary">Save</button>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- View Data Modal -->
+            <div class="modal fade" id="viewModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -147,12 +338,17 @@
                                         <!-- Left Column -->
                                         <div class="mb-3">
                                             <label for="domainName" class="form-label">Domain Name</label>
-                                            <input type="text" class="form-control" id="domainName" name="domainName">
+                                            <input type="text" class="form-control" readonly id="Vdomain_name"
+                                                name="domain_name">
+                                            <div class="invalid-feedback" class="text-danger" id="domain_name_msg">
+                                            </div>
                                         </div>
                                         <div class="mb-3">
                                             <label for="expiryDate" class="form-label">Domain Expiry Date</label>
-                                            <input type="date" class="form-control" name="domainExpdate"
-                                                id="expiryDate">
+                                            <input type="date" class="form-control" readonly name="domain_expiry"
+                                                id="Vdomain_expiry">
+                                            <div class="invalid-feedback" class="text-danger" id="domain_expiry_msg">
+                                            </div>
                                         </div>
                                         <!-- More domain-related fields can go here -->
                                     </div>
@@ -160,11 +356,17 @@
                                         <!-- Right Column -->
                                         <div class="mb-3">
                                             <label for="domainCost" class="form-label">Domain Cost</label>
-                                            <input type="text" class="form-control" id="domainCost" name="domainCost">
+                                            <input type="text" class="form-control" readonly id="Vdomain_cost"
+                                                name="domain_cost">
+                                            <div class="invalid-feedback" class="text-danger" id="domain_cost_msg">
+                                            </div>
                                         </div>
                                         <div class="mb-3">
                                             <label for="sellingCost" class="form-label">Selling Cost</label>
-                                            <input type="text" class="form-control" id="sellingCost" name="sellingCost">
+                                            <input type="text" class="form-control" readonly id="Vselling_cost"
+                                                name="selling_cost">
+                                            <div class="invalid-feedback" class="text-danger" id="selling_cost_msg">
+                                            </div>
                                         </div>
                                         <!-- More domain-related fields can go here -->
                                     </div>
@@ -172,14 +374,18 @@
                                         <!-- Left Column -->
                                         <div class="mb-3">
                                             <label for="domainProvider" class="form-label">Domain Provider</label>
-                                            <input type="text" class="form-control" id="domainProvider"
-                                                name="domainProvider">
+                                            <input type="text" class="form-control" readonly id="Vdomain_provider"
+                                                name="domain_provider">
+                                            <div class="invalid-feedback" class="text-danger" id="domain_provider_msg">
+                                            </div>
                                         </div>
                                         <div class="mb-3">
                                             <label for="RegistrationDate" class="form-label">Domain Registration
                                                 Date</label>
-                                            <input type="date" class="form-control" name="domainRegdate"
-                                                id="RegistrationDate">
+                                            <input type="date" class="form-control" readonly name="domain_register"
+                                                id="Vdomain_register">
+                                            <div class="invalid-feedback" class="text-danger" id="domain_register_msg">
+                                            </div>
                                         </div>
                                         <!-- More domain-related fields can go here -->
                                     </div>
@@ -187,24 +393,41 @@
                                         <!-- Right Column -->
                                         <div class="mb-3">
                                             <label for="email" class="form-label">Registered Email</label>
-                                            <input type="email" class="form-control" id="email" name="email">
+                                            <input type="email" class="form-control" readonly id="Vemail" name="email">
+                                            <div class="invalid-feedback" class="text-danger" id="email_msg"></div>
                                         </div>
                                         <div class="mb-3">
-                                            <label for="contact" class="form-label">Contact No.</label>
-                                            <input type="text" class="form-control" id="contact" name="phone">
+                                            <label for="contact" class="form-label">Phone/Mobile No.</label>
+                                            <input type="text" class="form-control" readonly id="Vphone" name="phone">
+                                            <div class="invalid-feedback" class="text-danger" id="phone_msg"></div>
                                         </div>
                                         <!-- More domain-related fields can go here -->
                                     </div>
                                     <div class="col-md-3">
                                         <div class="mb-3">
                                             <label for="company" class="form-label">Company Name</label>
-                                            <input type="text" class="form-control" id="company" name="company">
+                                            <input type="text" class="form-control" readonly id="Vcompany_name"
+                                                name="company_name">
+                                            <div class="invalid-feedback" class="text-danger" id="company_name_msg">
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="mb-3">
                                             <label for="renewalDate" class="form-label">Domain Renewal Year</label>
-                                            <input type="date" class="form-control" name="renewalDate" id="renewalDate">
+                                            <input type="date" class="form-control" readonly name="domain_renew"
+                                                id="Vdomain_renew">
+                                            <div class="invalid-feedback" class="text-danger" id="domain_renew_msg">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="mb-3">
+                                            <label for="renewalDate" class="form-label">Client Name</label>
+                                            <input type="text" class="form-control" readonly name="client_name"
+                                                id="Vclient_name">
+                                            <div class="invalid-feedback" class="text-danger" id="client_name_msg">
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -215,30 +438,30 @@
                                         <div class="row">
                                             <div class="col-md-5">
                                                 <div class="mb-3">
-                                                    <label for="totalSpace" class="form-label">Total Number of Space
-                                                        (GB)</label>
-                                                    <input type="text" class="form-control" id="totalSpace"
-                                                        name="space">
+                                                    <label for="expiryDate" class="form-label">Expiry Date</label>
+                                                    <input type="date" class="form-control" readonly name="hosting_expiry"
+                                                        id="Vhosting_expiry">
+                                                    <div class="invalid-feedback" class="text-danger"
+                                                        id="hosting_expiry_msg"></div>
                                                 </div>
                                                 <div class="mb-3">
-                                                    <label for="expiryDate" class="form-label">Expiry Date</label>
-                                                    <input type="date" class="form-control" name="expDate"
-                                                        id="expiryDate">
+                                                    <label for="totalSpace" class="form-label">Hosting Space
+                                                        (GB)</label>
+                                                    <input type="text" class="form-control" readonly id="Vhosting_space"
+                                                        name="hosting_space">
+                                                    <div class="invalid-feedback" class="text-danger"
+                                                        id="hosting_space_msg"></div>
                                                 </div>
                                             </div>
                                             <div class="col-md-5">
                                                 <div class="mb-3">
                                                     <label for="hostingCost" class="form-label">Hosting Cost</label>
-                                                    <input type="text" class="form-control" id="hostingCost"
-                                                        name="hostingCost">
+                                                    <input type="text" class="form-control" readonly id="Vhosting_cost"
+                                                        name="hosting_cost">
+                                                    <div class="invalid-feedback" class="text-danger"
+                                                        id="hosting_cost_msg"></div>
+                                                </div>
 
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label for="hostingSpace" class="form-label">Hosting Space
-                                                        (GB)</label>
-                                                    <input type="text" class="form-control" id="hostingSpace"
-                                                        name="hostingSpace">
-                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -247,36 +470,45 @@
                                         <div class="row">
                                             <div class="col-md-5">
                                                 <!-- Left Column -->
-                                                <div class="mb-3">
+                                                <!-- <div class="mb-3">
                                                     <label for="domainName" class="form-label">Domain Name</label>
-                                                    <input type="text" class="form-control" id="domainName"
+                                                    <input type="text" class="form-control" readonly id="domainName"
                                                         name="domain_Name">
-                                                </div>
+                                                </div> -->
                                                 <div class="mb-3">
-                                                    <label for="expiryDate" class="form-label">Expiry Date</label>
-                                                    <input type="date" class="form-control" id="expiryDate"
-                                                        name="ssl_expDate">
+                                                    <label for="expiryDate" class="form-label">SSL Expiry
+                                                        Date</label>
+                                                    <input type="date" class="form-control" readonly id="Vssl_expiry"
+                                                        name="ssl_expiry">
+                                                    <div class="invalid-feedback" class="text-danger"
+                                                        id="ssl_expiry_msg"></div>
                                                 </div>
                                             </div>
                                             <div class="col-md-5">
                                                 <!-- Right Column -->
                                                 <div class="mb-3">
-                                                    <label for="domainCost" class="form-label">Cost</label>
-                                                    <input type="text" class="form-control" id="domainCost" name="cost">
+                                                    <label for="domainCost" class="form-label">SSL Cost</label>
+                                                    <input type="text" class="form-control" readonly id="Vssl_cost"
+                                                        name="ssl_cost">
+                                                    <div class="invalid-feedback" class="text-danger" id="ssl_cost_msg">
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" id="submit" class="btn btn-primary">Save</button>
                         </div>
                     </div>
                 </div>
             </div>
+
+
+            <!-- Data Content -->
             <div class="dashboard__content">
                 <section class="flat-dashboard">
                     <div class="container7">
@@ -313,54 +545,11 @@
                                                             <th>Action</th>
                                                         </tr>
                                                     </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td>
-                                                                1.
-                                                            </td>
-                                                            <td>
-                                                                google.com
-                                                            </td>
-                                                            <td>
-                                                                01/10/2025
-                                                            </td>
-                                                            <td>
-                                                                01/10/2025
-                                                            </td>
-                                                            <td>
-                                                                01/10/2025
-                                                            </td>
-                                                            <td>
-                                                                1234567890
-                                                            </td>
-                                                            <td>
-                                                                Shubham Gupta
-                                                            </td>
-                                                            <td>
-                                                                Shubham@gmail.com
-                                                            </td>
-                                                            <td>
-                                                                View
-                                                            </td>
-
-                                                        </tr>
+                                                    <tbody class="domainInfo">
 
                                                     </tbody>
                                                 </table>
 
-                                            </div>
-                                            <div class="themesflat-pagination clearfix">
-                                                <ul>
-                                                    <li><a href="#" class="page-numbers style"><i
-                                                                class="far fa-angle-left"></i></a></li>
-                                                    <li><a href="#" class="page-numbers">1</a></li>
-                                                    <li><a href="#" class="page-numbers">2</a></li>
-                                                    <li><a href="#" class="page-numbers current">3</a></li>
-                                                    <li><a href="#" class="page-numbers">4</a></li>
-                                                    <li><a href="#" class="page-numbers">...</a></li>
-                                                    <li><a href="#" class="page-numbers style"><i
-                                                                class="far fa-angle-right"></i></a></li>
-                                                </ul>
                                             </div>
                                         </div>
                                     </div>
@@ -375,7 +564,103 @@
     </div>
 
     <script>
+        $(document).ready(function () {
+            // Data Insertion
+            $('#submit').click(function (event) {
+                event.preventDefault();
+                // console.log('clicked');
+                var formData = $('#formId').serialize();
+                // console.log(formData);
+                $.ajax({
+                    method: "POST",
+                    url: "<?= base_url('domain_data') ?>",
+                    data: formData,
+                    dataType: "json",
+                    success: function (response) {
+                        $('input').removeClass('is-invalid');
+                        if (response.status == 'success') {
+                            // $('input').val('');
+                            $('#showModal').modal('hide');
+                            console.log(response);
+                        } else {
+                            let error = response.errors;
+                            // console.log(error);
+                            for (const key in error) {
+                                // console.log(key);
+                                // console.log(key, error[key]);
+                                document.getElementById(key).classList.add('is-invalid');
+                                document.getElementById(key + '_msg').innerHTML = error[key];
+                            }
+                            console.log(response);
+                        }
+                    }
+                });
+            });
 
+        });
+    </script>
+
+    <!-- Fetching data of particular id-->
+    <script>
+        $(document).ready(function () {
+            $(document).on('click', '.view', function () {
+                var domainId = $(this).closest('tr').find('.domainId').text();
+                // console.log(domainId);
+                $.ajax({
+                    method: "POST",
+                    url: "<?= base_url('view_data') ?>",
+                    data: {
+                        'domainId': domainId
+                    },
+                    success: function (response) {
+                        // console.log(response);
+                        $.each(response, function (key, value) {
+                            $('#Vdomain_name').val(value['domain_name']);
+                            $('#Vdomain_expiry').val(value['domain_expiry']);
+                            $('#Vdomain_cost').val(value['domain_cost']);
+                            $('#Vselling_cost').val(value['selling_cost']);
+                            $('#Vdomain_provider').val(value['domain_provider']);
+                            $('#Vdomain_register').val(value['domain_register']);
+                            $('#Vemail').val(value['email']);
+                            $('#Vphone').val(value['phone']);
+                            $('#Vcompany_name').val(value['company_name']);
+                            $('#Vdomain_renew').val(value['domain_renew']);
+                            $('#Vclient_name').val(value['client_name']);
+                            $('#Vhosting_expiry').val(value['hosting_expiry']);
+                            $('#Vhosting_space').val(value['hosting_space']);
+                            $('#Vhosting_cost').val(value['hosting_cost']);
+                            $('#Vssl_expiry').val(value['ssl_expiry']);
+                            $('#Vssl_cost').val(value['ssl_cost']);
+                            // $("#viewModal").modal('');
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+
+    <script>
+        // Retrive data
+        $.ajax({
+            method: "GET",
+            url: "<?= base_url('retrive_data') ?>",
+            success: function (response) {
+                $.each(response.domain, function (key, value) {
+                    // console.log(value['name']);
+                    $('.domainInfo').append('<tr>' +
+                        '<th scope="row" class="domainId">' + value['id'] + '</th>' +
+                        '<td>' + value['domain_name'] + '</td>' +
+                        '<td>' + value['domain_expiry'] + '</td>' +
+                        '<td>' + value['hosting_expiry'] + '</td>' +
+                        '<td>' + value['ssl_expiry'] + '</td>' +
+                        '<td>' + value['phone'] + '</td>' +
+                        '<td>' + value['client_name'] + '</td>' +
+                        '<td>' + value['email'] + '</td>' +
+                        '<td>' + '<a data-bs-toggle="modal" data-bs-target="#viewModal" class="view" >View</a>' + '</td>' +
+                        '</tr>');
+                });
+            }
+        });
     </script>
 </body>
 

@@ -11,3 +11,12 @@ $routes->post('/register', 'HomeController::register');
 $routes->get('/login', 'HomeController::login');
 $routes->post('/login', 'HomeController::login');
 $routes->get('/logout', 'HomeController::logout');
+
+// form (domain) data
+$routes->post('/domain_data', 'HomeController::domain_data');
+
+// retrive data 
+$routes->get('/retrive_data', 'HomeController::retrive_data');
+
+// view data of particular id
+$routes->post('/view_data', 'HomeController::view_data');
