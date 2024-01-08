@@ -167,14 +167,6 @@
                                                 value="ssl">SSL</label>
                                         <br><br>
                                     </div>
-                                    <div class="container" id="Domain_Container" style="display:none;">
-                                        <div class="mb-3">
-                                            <label for="domainName" class="form-label">Domain Name</label>
-                                            <input type="text" class="form-control" id="domain_Name" name="domain_Name">
-                                            <div class="invalid-feedback" class="text-danger" id="domain_name_msg">
-                                            </div>
-                                        </div>
-                                    </div>
 
                                     <div class="container" id="domainContainer" style="display: none;">
                                         <div class="row">
@@ -614,10 +606,6 @@
     </div>
 
 
-    <!--  -->
-    <script>
-
-    </script>
     <!--  Modal container adjust css -->
     <script>
         $(document).ready(function () {

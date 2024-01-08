@@ -54,7 +54,9 @@ class HomeController extends BaseController
             if (!$validation) {
                 $validation = \Config\Services::validation();
                 $errors = $validation->getErrors();
-                echo json_encode(['status' => 'error', 'data' => 'Validate form', 'errors' => $errors]);
+                $message = ['status' => 'error', 'data' => 'Validate form', 'errors' => $errors];
+                return $this->response->setJSON($message);
+                // echo json_encode(['status' => 'error', 'data' => 'Validate form', 'errors' => $errors]);
             } else {
                 // echo "form submit";
                 $username = $this->request->getPost('username');
@@ -111,7 +113,9 @@ class HomeController extends BaseController
             if (!$validation) {
                 $validation = \Config\Services::validation();
                 $errors = $validation->getErrors();
-                echo json_encode(['status' => 'error', 'data' => 'Validate form', 'errors' => $errors]);
+                $message = ['status' => 'error', 'data' => 'Validate form', 'errors' => $errors];
+                return $this->response->setJSON($message);
+                // echo json_encode(['status' => 'error', 'data' => 'Validate form', 'errors' => $errors]);
             } else {
                 // echo "Login";
                 $email = $this->request->getPost('email');
@@ -290,7 +294,6 @@ class HomeController extends BaseController
                         'required' => 'SSL Cost is required',
                     ]
                 ],
-                // Add other hosting related validation rules here
             ];
 
             // Gather data for 'hosting' checkbox
@@ -306,7 +309,9 @@ class HomeController extends BaseController
             // echo "All feilds are Required";
             $validation = \Config\Services::validation();
             $errors = $validation->getErrors();
-            echo json_encode(['status' => 'error', 'data' => 'Validate form', 'errors' => $errors]);
+            $message = ['status' => 'error', 'data' => 'Validate form', 'errors' => $errors];
+            return $this->response->setJSON($message);
+            // echo json_encode(['status' => 'error', 'data' => 'Validate form', 'errors' => $errors]);
         } else {
             // echo "Form submit code"; 
             // echo json_encode(['status' => 'success', 'data' => 'Form submitted', 'errors' => []]);
