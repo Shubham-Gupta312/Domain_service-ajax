@@ -85,10 +85,12 @@
     #logout a {
         color: #333;
     }
-    .box label{
+
+    .box label {
         font-size: 20px;
     }
-    .box input[type="checkbox"]{
+
+    .box input[type="checkbox"] {
         height: 20px;
         width: 20px;
     }
@@ -147,7 +149,7 @@
 
             <!-- Add data Modal -->
             <div class="modal fade" id="showModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
+                <div class="modal-dialog modal-scroll">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalLabel">Domain Info:</h5>
@@ -157,11 +159,23 @@
                             <form id="formId">
                                 <div class="container-fluid">
                                     <div class="box m-4">
-                                        <label><input type="checkbox" class="checkbox m-2" value="hosting">Hosting</label>
-                                        <label><input type="checkbox" class="checkbox m-2" value="domain">Domain</label>
-                                        <label><input type="checkbox" class="checkbox m-2" value="ssl">SSL</label>
+                                        <label><input type="checkbox" class="checkbox m-2" name="domain_checkbox"
+                                                value="domain">Domain</label>
+                                        <label><input type="checkbox" class="checkbox m-2" name="hosting_checkbox"
+                                                value="hosting">Hosting</label>
+                                        <label><input type="checkbox" class="checkbox m-2" name="ssl_checkbox"
+                                                value="ssl">SSL</label>
                                         <br><br>
                                     </div>
+                                    <div class="container" id="Domain_Container" style="display:none;">
+                                        <div class="mb-3">
+                                            <label for="domainName" class="form-label">Domain Name</label>
+                                            <input type="text" class="form-control" id="domain_Name" name="domain_Name">
+                                            <div class="invalid-feedback" class="text-danger" id="domain_name_msg">
+                                            </div>
+                                        </div>
+                                    </div>
+
                                     <div class="container" id="domainContainer" style="display: none;">
                                         <div class="row">
                                             <h3>Domain Information</h3>
@@ -599,6 +613,23 @@
         </div>
     </div>
 
+
+    <!--  -->
+    <script>
+
+    </script>
+    <!--  Modal container adjust css -->
+    <script>
+        $(document).ready(function () {
+            $('input[type="checkbox"]').on('change', function () {
+                if ($('input[type="checkbox"]:checked').length > 0) {
+                    $('.modal-scroll').css('overflow-y', 'scroll');
+                } else {
+                    $('.modal-scroll').css('overflow-y', 'auto');
+                }
+            });
+        });
+    </script>
     <!--  Hide/Show Container  -->
 
     <script>

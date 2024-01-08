@@ -153,154 +153,166 @@ class HomeController extends BaseController
 
     public function domain_data()
     {
-        $validation = $this->validate([
-            'domain_name' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'Domain Name is required',
-                ]
-            ],
-            'domain_expiry' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'Domain Expiry Date is required',
-                ]
-            ],
-            'domain_cost' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'Domain Cost is required',
-                ]
-            ],
-            'selling_cost' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'Selling Cost is required',
-                ]
-            ],
-            'domain_provider' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'Domain Provider is required',
-                ]
-            ],
-            'domain_register' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'Domain Registration Date is required',
-                ]
-            ],
-            'email' => [
-                'rules' => 'required|valid_email',
-                'errors' => [
-                    'required' => 'Email is required',
-                    'valid_email' => 'You must enter a valid email',
-                ]
-            ],
-            'phone' => [
-                'rules' => 'required|numeric|max_length[10]|min_length[10]',
-                'errors' => [
-                    'required' => 'Contact No. is required',
-                    'numeric' => 'Your Contact No. must be a number',
-                    'min_length' => 'Your Contact No. must have 10 digits number',
-                    'max_length' => 'Your Contact No. must have 10 digits number'
+        $validationRules = [];
+        $data = [];
 
-                ]
-            ],
-            'company_name' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'Company Name is required',
-                ]
-            ],
-            'domain_renew' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'Domain Renewal Date is required',
-                ]
-            ],
-            'client_name' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'Client Name is required',
-                ]
-            ],
-            'hosting_space' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'Hosting Space is required',
-                ]
-            ],
-            'hosting_expiry' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'Hosting Expiry Date is required',
-                ]
-            ],
-            'hosting_cost' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'Hosting Cost is required',
-                ]
-            ],
-            'ssl_expiry' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'SSL Expiry date is required',
-                ]
-            ],
-            'ssl_cost' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'SSL Cost is required',
-                ]
-            ],
-        ]);
+        // Check if 'domain' checkbox is selected
+        if ($this->request->getPost('domain_checkbox')) {
+            $validationRules += [
+                'domain_name' => [
+                    'rules' => 'required',
+                    'errors' => ['required' => 'Domain Name is required']
+                ],
+                'domain_expiry' => [
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => 'Domain Expiry Date is required',
+                    ]
+                ],
+                'domain_cost' => [
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => 'Domain Cost is required',
+                    ]
+                ],
+                'selling_cost' => [
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => 'Selling Cost is required',
+                    ]
+                ],
+                'domain_provider' => [
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => 'Domain Provider is required',
+                    ]
+                ],
+                'domain_register' => [
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => 'Domain Registration Date is required',
+                    ]
+                ],
+                'email' => [
+                    'rules' => 'required|valid_email',
+                    'errors' => [
+                        'required' => 'Email is required',
+                        'valid_email' => 'You must enter a valid email',
+                    ]
+                ],
+                'phone' => [
+                    'rules' => 'required|numeric|max_length[10]|min_length[10]',
+                    'errors' => [
+                        'required' => 'Contact No. is required',
+                        'numeric' => 'Your Contact No. must be a number',
+                        'min_length' => 'Your Contact No. must have 10 digits number',
+                        'max_length' => 'Your Contact No. must have 10 digits number'
+
+                    ]
+                ],
+                'company_name' => [
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => 'Company Name is required',
+                    ]
+                ],
+                'domain_renew' => [
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => 'Domain Renewal Date is required',
+                    ]
+                ],
+                'client_name' => [
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => 'Client Name is required',
+                    ]
+                ],
+
+            ];
+
+            // Gather data for 'domain' checkbox
+            $data['domain_name'] = $this->request->getPost('domain_name');
+            $data['domain_cost'] = $this->request->getPost('domain_cost');
+            $data['domain_provider'] = $this->request->getPost('domain_provider');
+            $data['domain_expiry'] = $this->request->getPost('domain_expiry');
+            $data['domain_register'] = $this->request->getPost('domain_register');
+            $data['email'] = $this->request->getPost('email');
+            $data['phone'] = $this->request->getPost('phone');
+            $data['company_name'] = $this->request->getPost('company_name');
+            $data['client_name'] = $this->request->getPost('client_name');
+            $data['domain_renew'] = $this->request->getPost('domain_renew');
+            $data['selling_cost'] = $this->request->getPost('selling_cost');
+            // Collect other domain related fields here
+        }
+
+        // Check if 'hosting' checkbox is selected
+        if ($this->request->getPost('hosting_checkbox')) {
+            $validationRules += [
+                'hosting_space' => [
+                    'rules' => 'required',
+                    'errors' => ['required' => 'Hosting Space is required']
+                ],
+                'hosting_expiry' => [
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => 'Hosting Expiry Date is required',
+                    ]
+                ],
+                'hosting_cost' => [
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => 'Hosting Cost is required',
+                    ]
+                ],
+                // Add other hosting related validation rules here
+            ];
+
+            // Gather data for 'hosting' checkbox
+            $data['hosting_space'] = $this->request->getPost('hosting_space');
+            $data['hosting_expiry'] = $this->request->getPost('hosting_expiry');
+            $data['hosting_cost'] = $this->request->getPost('hosting_cost');
+            // Collect other hosting related fields here
+        }
+
+        // Check if 'ssl' checkbox is selected
+        if ($this->request->getPost('ssl_checkbox')) {
+            $validationRules += [
+                'ssl_expiry' => [
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => 'SSL Expiry date is required',
+                    ]
+                ],
+                'ssl_cost' => [
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => 'SSL Cost is required',
+                    ]
+                ],
+                // Add other hosting related validation rules here
+            ];
+
+            // Gather data for 'hosting' checkbox
+            $data['ssl_expiry'] = $this->request->getPost('ssl_expiry');
+            $data['ssl_cost'] = $this->request->getPost('ssl_cost');
+            // Collect other hosting related fields here
+        }
+
+        // Apply validation rules
+        $validation = $this->validate($validationRules);
+
         if (!$validation) {
             // echo "All feilds are Required";
             $validation = \Config\Services::validation();
             $errors = $validation->getErrors();
             echo json_encode(['status' => 'error', 'data' => 'Validate form', 'errors' => $errors]);
         } else {
-            // echo "Form submit code";
-            $domainName = $this->request->getPost('domain_name');
-            $domainCost = $this->request->getPost('domain_cost');
-            $domainProvider = $this->request->getPost('domain_provider');
-            $domainExp = $this->request->getPost('domain_expiry');
-            $domainRegst = $this->request->getPost('domain_register');
-            $email = $this->request->getPost('email');
-            $phone = $this->request->getPost('phone');
-            $company = $this->request->getPost('company_name');
-            $clientName = $this->request->getPost('client_name');
-            $domainRenew = $this->request->getPost('domain_renew');
-            $sellingCost = $this->request->getPost('selling_cost');
-            $hostingCost = $this->request->getPost('hosting_cost');
-            $hostExp = $this->request->getPost('hosting_expiry');
-            $hostSpace = $this->request->getPost('hosting_space');
-            $sslCost = $this->request->getPost('ssl_cost');
-            $sslExp = $this->request->getPost('ssl_expiry');
-
-            $values = [
-                'domain_name' => $domainName,
-                'domain_cost' => $domainCost,
-                'domain_expiry' => $domainExp,
-                'selling_cost' => $sellingCost,
-                'domain_provider' => $domainProvider,
-                'domain_register' => $domainRegst,
-                'email' => $email,
-                'phone' => $phone,
-                'company_name' => $company,
-                'domain_renew' => $domainRenew,
-                'hosting_space' => $hostSpace,
-                'hosting_expiry' => $hostExp,
-                'hosting_cost' => $hostingCost,
-                'client_name' => $clientName,
-                'ssl_expiry' => $sslExp,
-                'ssl_cost' => $sslCost,
-            ];
+            // echo "Form submit code"; 
+            // echo json_encode(['status' => 'success', 'data' => 'Form submitted', 'errors' => []]);
 
             $domainModel = new \App\Models\DomainInfoModel();
-            $query = $domainModel->insert($values);
+            $query = $domainModel->insert($data);
 
             if (!$query) {
                 $message = ['status' => 'error', 'message' => 'Something went Wrong!'];
