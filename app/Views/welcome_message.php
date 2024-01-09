@@ -26,6 +26,9 @@
         crossorigin="anonymous"></script>
     <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Data Table -->
+    <script src="//cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
 
 
 
@@ -40,6 +43,16 @@
         margin: 1.75rem auto;
         overflow-y: scroll;
         height: 500px;
+    }
+
+    .dataTables_filter {
+        float: right;
+    }
+    .pagination{
+        float: right;
+    }
+    .dataTables_info, .paging_simple_numbers{
+        margin-top: 12px;
     }
 
     input {
@@ -310,6 +323,14 @@
                                                         <div class="invalid-feedback" class="text-danger"
                                                             id="hosting_cost_msg"></div>
                                                     </div>
+                                                    <div class="mb-3">
+                                                        <label for="hostingCost" id="hostlabelDomain"
+                                                            class="form-label">Domain Name</label>
+                                                        <input type="text" class="form-control" id="domainName"
+                                                            name="domainName">
+                                                        <div class="invalid-feedback" class="text-danger"
+                                                            id="domainName_msg"></div>
+                                                    </div>
 
                                                 </div>
                                             </div>
@@ -320,11 +341,14 @@
                                         <div class="row">
                                             <div class="col-md-5">
                                                 <!-- Left Column -->
-                                                <!-- <div class="mb-3">
-                                                    <label for="domainName" class="form-label">Domain Name</label>
-                                                    <input type="text" class="form-control" id="domainName"
-                                                        name="domain_Name">
-                                                </div> -->
+                                                <div class="mb-3">
+                                                    <label for="domainName" id="labelDomain" class="form-label">Domain
+                                                        Name</label>
+                                                    <input type="text" class="form-control" id="domain-Name"
+                                                        name="domain-Name">
+                                                    <div class="invalid-feedback" class="text-danger"
+                                                        id="domain-Name_msg"></div>
+                                                </div>
                                                 <div class="mb-3">
                                                     <label for="expiryDate" class="form-label">SSL Expiry
                                                         Date</label>
@@ -573,7 +597,7 @@
                                                         </button>
                                                     </div>
                                                 </div>
-                                                <table class="table-bordered">
+                                                <table class="table-bordered" id="myTable">
                                                     <thead>
                                                         <tr>
                                                             <th>S.no</th>
@@ -605,6 +629,52 @@
         </div>
     </div>
 
+    <!-- Data Table -->
+    <script>
+        $(document).ready(function () {
+            // let table = new DataTable('#myTable');
+            setTimeout(function () {
+                $('#myTable').DataTable();
+            }, 400);
+
+        });
+    </script>
+
+    <!-- domain name hide or show  -->
+    <script>
+        $(document).ready(function () {
+            $('input[type="checkbox"]').on('change', function () {
+                var sslChecked = $('input[value="ssl"]').is(':checked');
+                var hostingChecked = $('input[value="hosting"]').is(':checked');
+                var domainChecked = $('input[value="domain"]').is(':checked');
+
+                if ((domainChecked && sslChecked) || (domainChecked && hostingChecked) || (domainChecked && sslChecked && hostingChecked)) {
+                    // ssl feild hide
+                    $("#labelDomain").hide();
+                    $('#domain-Name').hide();
+                    // hosting field hide
+                    $('#hostlabelDomain').hide();
+                    $('#domainName').hide();
+                }
+                else if (sslChecked && hostingChecked) {
+                    $("#labelDomain").hide();
+                    $('#domain-Name').hide();
+                    $('#domainName').show();
+                    $('#hostlabelDomain').show();
+                }
+                else if (sslChecked) {
+                    $("#labelDomain").show();
+                    $('#domain-Name').show();
+                }
+                else if (hostingChecked) {
+                    $('#domainName').show();
+                    $('#hostlabelDomain').show();
+                }
+
+            });
+        });
+
+    </script>
 
     <!--  Modal container adjust css -->
     <script>
@@ -700,7 +770,7 @@
                         'domainId': domainId
                     },
                     success: function (response) {
-                        // console.log(response);
+                        console.log(response);
                         $.each(response, function (key, value) {
                             $('#Vdomain_name').val(value['domain_name']);
                             $('#Vdomain_expiry').val(value['domain_expiry']);

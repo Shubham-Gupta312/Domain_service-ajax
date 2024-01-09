@@ -269,13 +269,25 @@ class HomeController extends BaseController
                         'required' => 'Hosting Cost is required',
                     ]
                 ],
-                // Add other hosting related validation rules here
             ];
+
+            if (!($this->request->getPost('hosting_checkbox') && $this->request->getPost('domain_checkbox'))) {
+                // Add domain name validation rules when SSL is not checked and hosting is checked
+                $validationRules += [
+                    'domainName' => [
+                        'rules' => 'required',
+                        'errors' => [
+                            'required' => 'Domain Name is required',
+                        ]
+                    ]
+                ];
+            }
 
             // Gather data for 'hosting' checkbox
             $data['hosting_space'] = $this->request->getPost('hosting_space');
             $data['hosting_expiry'] = $this->request->getPost('hosting_expiry');
             $data['hosting_cost'] = $this->request->getPost('hosting_cost');
+            // $data['domainName'] = $this->request->getPost('domainName');
             // Collect other hosting related fields here
         }
 
@@ -293,13 +305,36 @@ class HomeController extends BaseController
                     'errors' => [
                         'required' => 'SSL Cost is required',
                     ]
-                ],
+                ]
             ];
+            // Check if both hosting and SSL checkboxes are not checked
+            if (!($this->request->getPost('hosting_checkbox') && $this->request->getPost('ssl_checkbox'))) {
+                // Add domain name validation rules when SSL is checked and hosting is not checked
+                $validationRules += [
+                    'domain-Name' => [
+                        'rules' => 'required',
+                        'errors' => [
+                            'required' => 'Domain Name is required',
+                        ]
+                    ]
+                ];
+            } 
+            if(!($this->request->getPost('domain_checkbox') && $this->request->getPost('ssl_checkbox'))){
+                $validationRules += [
+                    'domain-Name' => [
+                        'rules' => 'required',
+                        'errors' => [
+                            'required' => 'Domain Name is required',
+                        ]
+                    ]
+                ];
+            }
 
-            // Gather data for 'hosting' checkbox
+            // Gather data for 'ssl' checkbox
+            // $data['domain-Name'] = $this->request->getPost('domain-Name');
             $data['ssl_expiry'] = $this->request->getPost('ssl_expiry');
             $data['ssl_cost'] = $this->request->getPost('ssl_cost');
-            // Collect other hosting related fields here
+            // Collect other ssl related fields here
         }
 
         // Apply validation rules
@@ -316,9 +351,23 @@ class HomeController extends BaseController
             // echo "Form submit code"; 
             // echo json_encode(['status' => 'success', 'data' => 'Form submitted', 'errors' => []]);
 
+
+            $dmnChk = $this->request->getPost('domain_checkbox');
+            $hstChk = $this->request->getPost('hosting_checkbox');
+            $sslChk = $this->request->getPost('ssl_checkbox');
+            if ($dmnChk) {
+                $data['domain_name'] = $this->request->getPost('domain_name');
+            } else if ($hstChk || ($hstChk && $sslChk)) {
+                $data['domain_name'] = $this->request->getPost('domainName');
+            } else if ($sslChk) {
+                $data['domain_name'] = $this->request->getPost('domain-Name');
+             }
+            //else if($hstChk && $sslChk){
+            //     $data['domain_name'] = $this->request->getPost('domainName');
+            // }
+
             $domainModel = new \App\Models\DomainInfoModel();
             $query = $domainModel->insert($data);
-
             if (!$query) {
                 $message = ['status' => 'error', 'message' => 'Something went Wrong!'];
                 return $this->response->setJSON($message);
