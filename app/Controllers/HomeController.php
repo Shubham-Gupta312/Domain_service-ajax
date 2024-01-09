@@ -311,17 +311,17 @@ class HomeController extends BaseController
             if (!($this->request->getPost('hosting_checkbox') && $this->request->getPost('ssl_checkbox'))) {
                 // Add domain name validation rules when SSL is checked and hosting is not checked
                 $validationRules += [
-                    'domain-Name' => [
+                    'Domain-Name' => [
                         'rules' => 'required',
                         'errors' => [
                             'required' => 'Domain Name is required',
                         ]
                     ]
                 ];
-            } 
-            if(!($this->request->getPost('domain_checkbox') && $this->request->getPost('ssl_checkbox'))){
+            }
+            if (!($this->request->getPost('domain_checkbox') && $this->request->getPost('ssl_checkbox'))) {
                 $validationRules += [
-                    'domain-Name' => [
+                    'Domain-Name' => [
                         'rules' => 'required',
                         'errors' => [
                             'required' => 'Domain Name is required',
@@ -360,11 +360,9 @@ class HomeController extends BaseController
             } else if ($hstChk || ($hstChk && $sslChk)) {
                 $data['domain_name'] = $this->request->getPost('domainName');
             } else if ($sslChk) {
-                $data['domain_name'] = $this->request->getPost('domain-Name');
-             }
-            //else if($hstChk && $sslChk){
-            //     $data['domain_name'] = $this->request->getPost('domainName');
-            // }
+                $data['domain_name'] = $this->request->getPost('Domain-Name');
+            }
+
 
             $domainModel = new \App\Models\DomainInfoModel();
             $query = $domainModel->insert($data);

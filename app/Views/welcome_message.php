@@ -48,10 +48,13 @@
     .dataTables_filter {
         float: right;
     }
-    .pagination{
+
+    .pagination {
         float: right;
     }
-    .dataTables_info, .paging_simple_numbers{
+
+    .dataTables_info,
+    .paging_simple_numbers {
         margin-top: 12px;
     }
 
@@ -187,7 +190,7 @@
                                             <div class="col-md-3">
                                                 <!-- Left Column -->
                                                 <div class="mb-3">
-                                                    <label for="domainName" class="form-label">Domain Name</label>
+                                                    <label for="domainName" class="form-label">Domain Name</label><span class="text-danger">*</span>
                                                     <input type="text" class="form-control" id="domain_name"
                                                         name="domain_name">
                                                     <div class="invalid-feedback" class="text-danger"
@@ -196,7 +199,7 @@
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="expiryDate" class="form-label">Domain Expiry
-                                                        Date</label>
+                                                        Date</label><span class="text-danger">*</span>
                                                     <input type="date" class="form-control" name="domain_expiry"
                                                         id="domain_expiry">
                                                     <div class="invalid-feedback" class="text-danger"
@@ -207,7 +210,8 @@
                                             <div class="col-md-3">
                                                 <!-- Right Column -->
                                                 <div class="mb-3">
-                                                    <label for="domainCost" class="form-label">Domain Cost</label>
+                                                    <label for="domainCost" class="form-label">Domain Cost
+                                                        (&#x20B9;)</label><span class="text-danger">*</span>
                                                     <input type="text" class="form-control" id="domain_cost"
                                                         name="domain_cost">
                                                     <div class="invalid-feedback" class="text-danger"
@@ -215,7 +219,8 @@
                                                     </div>
                                                 </div>
                                                 <div class="mb-3">
-                                                    <label for="sellingCost" class="form-label">Selling Cost</label>
+                                                    <label for="sellingCost" class="form-label">Selling Cost
+                                                        (&#x20B9;)</label><span class="text-danger">*</span>
                                                     <input type="text" class="form-control" id="selling_cost"
                                                         name="selling_cost">
                                                     <div class="invalid-feedback" class="text-danger"
@@ -228,7 +233,7 @@
                                                 <!-- Left Column -->
                                                 <div class="mb-3">
                                                     <label for="domainProvider" class="form-label">Domain
-                                                        Provider</label>
+                                                        Provider</label><span class="text-danger">*</span>
                                                     <input type="text" class="form-control" id="domain_provider"
                                                         name="domain_provider">
                                                     <div class="invalid-feedback" class="text-danger"
@@ -236,7 +241,7 @@
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="RegistrationDate" class="form-label">Domain Registration
-                                                        Date</label>
+                                                        Date</label><span class="text-danger">*</span>
                                                     <input type="date" class="form-control" name="domain_register"
                                                         id="domain_register">
                                                     <div class="invalid-feedback" class="text-danger"
@@ -247,13 +252,13 @@
                                             <div class="col-md-3">
                                                 <!-- Right Column -->
                                                 <div class="mb-3">
-                                                    <label for="email" class="form-label">Registered Email</label>
+                                                    <label for="email" class="form-label">Registered Email</label><span class="text-danger">*</span>
                                                     <input type="email" class="form-control" id="email" name="email">
                                                     <div class="invalid-feedback" class="text-danger" id="email_msg">
                                                     </div>
                                                 </div>
                                                 <div class="mb-3">
-                                                    <label for="contact" class="form-label">Phone/Mobile No.</label>
+                                                    <label for="contact" class="form-label">Phone/Mobile No.</label><span class="text-danger">*</span>
                                                     <input type="text" class="form-control" id="phone" name="phone">
                                                     <div class="invalid-feedback" class="text-danger" id="phone_msg">
                                                     </div>
@@ -262,7 +267,7 @@
                                             </div>
                                             <div class="col-md-3">
                                                 <div class="mb-3">
-                                                    <label for="company" class="form-label">Company Name</label>
+                                                    <label for="company" class="form-label">Company Name</label><span class="text-danger">*</span>
                                                     <input type="text" class="form-control" id="company_name"
                                                         name="company_name">
                                                     <div class="invalid-feedback" class="text-danger"
@@ -273,7 +278,7 @@
                                             <div class="col-md-3">
                                                 <div class="mb-3">
                                                     <label for="renewalDate" class="form-label">Domain Renewal
-                                                        Year</label>
+                                                        Year</label><span class="text-danger">*</span>
                                                     <input type="date" class="form-control" name="domain_renew"
                                                         id="domain_renew">
                                                     <div class="invalid-feedback" class="text-danger"
@@ -283,7 +288,7 @@
                                             </div>
                                             <div class="col-md-3">
                                                 <div class="mb-3">
-                                                    <label for="renewalDate" class="form-label">Client Name</label>
+                                                    <label for="renewalDate" class="form-label">Client Name</label><span class="text-danger">*</span>
                                                     <input type="text" class="form-control" name="client_name"
                                                         id="client_name">
                                                     <div class="invalid-feedback" class="text-danger"
@@ -300,7 +305,7 @@
                                             <div class="row">
                                                 <div class="col-md-5">
                                                     <div class="mb-3">
-                                                        <label for="expiryDate" class="form-label">Expiry Date</label>
+                                                        <label for="expiryDate" class="form-label">Expiry Date</label><span class="text-danger">*</span>
                                                         <input type="date" class="form-control" name="hosting_expiry"
                                                             id="hosting_expiry">
                                                         <div class="invalid-feedback" class="text-danger"
@@ -308,7 +313,7 @@
                                                     </div>
                                                     <div class="mb-3">
                                                         <label for="totalSpace" class="form-label">Hosting Space
-                                                            (GB)</label>
+                                                            (GB)</label><span class="text-danger">*</span>
                                                         <input type="text" class="form-control" id="hosting_space"
                                                             name="hosting_space">
                                                         <div class="invalid-feedback" class="text-danger"
@@ -317,7 +322,8 @@
                                                 </div>
                                                 <div class="col-md-5">
                                                     <div class="mb-3">
-                                                        <label for="hostingCost" class="form-label">Hosting Cost</label>
+                                                        <label for="hostingCost" class="form-label">Hosting Cost
+                                                            (&#x20B9;)</label><span class="text-danger">*</span>
                                                         <input type="text" class="form-control" id="hosting_cost"
                                                             name="hosting_cost">
                                                         <div class="invalid-feedback" class="text-danger"
@@ -325,7 +331,7 @@
                                                     </div>
                                                     <div class="mb-3">
                                                         <label for="hostingCost" id="hostlabelDomain"
-                                                            class="form-label">Domain Name</label>
+                                                            class="form-label">Domain Name</label><span class="text-danger mandatory">*</span>
                                                         <input type="text" class="form-control" id="domainName"
                                                             name="domainName">
                                                         <div class="invalid-feedback" class="text-danger"
@@ -340,18 +346,9 @@
                                         <h3>SSL</h3>
                                         <div class="row">
                                             <div class="col-md-5">
-                                                <!-- Left Column -->
-                                                <div class="mb-3">
-                                                    <label for="domainName" id="labelDomain" class="form-label">Domain
-                                                        Name</label>
-                                                    <input type="text" class="form-control" id="domain-Name"
-                                                        name="domain-Name">
-                                                    <div class="invalid-feedback" class="text-danger"
-                                                        id="domain-Name_msg"></div>
-                                                </div>
                                                 <div class="mb-3">
                                                     <label for="expiryDate" class="form-label">SSL Expiry
-                                                        Date</label>
+                                                        Date</label><span class="text-danger">*</span>
                                                     <input type="date" class="form-control" id="ssl_expiry"
                                                         name="ssl_expiry">
                                                     <div class="invalid-feedback" class="text-danger"
@@ -361,11 +358,23 @@
                                             <div class="col-md-5">
                                                 <!-- Right Column -->
                                                 <div class="mb-3">
-                                                    <label for="domainCost" class="form-label">SSL Cost</label>
+                                                    <label for="domainCost" class="form-label">SSL Cost
+                                                        (&#x20B9;)</label><span class="text-danger">*</span>
                                                     <input type="text" class="form-control" id="ssl_cost"
                                                         name="ssl_cost">
                                                     <div class="invalid-feedback" class="text-danger" id="ssl_cost_msg">
                                                     </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <!-- Left Column -->
+                                                <div class="mb-3">
+                                                    <label for="domainName" id="labelDomain" class="form-label">Domain
+                                                        Name</label><span class="text-danger mandatoryssl">*</span>
+                                                    <input type="text" class="form-control" id="Domain-Name"
+                                                        name="Domain-Name">
+                                                    <div class="invalid-feedback" class="text-danger"
+                                                        id="Domain-Name_msg"></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -421,14 +430,14 @@
                                     <div class="col-md-3">
                                         <!-- Right Column -->
                                         <div class="mb-3">
-                                            <label for="domainCost" class="form-label">Domain Cost</label>
+                                            <label for="domainCost" class="form-label">Domain Cost (&#x20B9;)</label>
                                             <input type="text" class="form-control" readonly id="Vdomain_cost"
                                                 name="domain_cost">
                                             <div class="invalid-feedback" class="text-danger" id="domain_cost_msg">
                                             </div>
                                         </div>
                                         <div class="mb-3">
-                                            <label for="sellingCost" class="form-label">Selling Cost</label>
+                                            <label for="sellingCost" class="form-label">Selling Cost (&#x20B9;)</label>
                                             <input type="text" class="form-control" readonly id="Vselling_cost"
                                                 name="selling_cost">
                                             <div class="invalid-feedback" class="text-danger" id="selling_cost_msg">
@@ -521,7 +530,8 @@
                                             </div>
                                             <div class="col-md-5">
                                                 <div class="mb-3">
-                                                    <label for="hostingCost" class="form-label">Hosting Cost</label>
+                                                    <label for="hostingCost" class="form-label">Hosting Cost
+                                                        (&#x20B9;)</label>
                                                     <input type="text" class="form-control" readonly id="Vhosting_cost"
                                                         name="hosting_cost">
                                                     <div class="invalid-feedback" class="text-danger"
@@ -553,7 +563,8 @@
                                             <div class="col-md-5">
                                                 <!-- Right Column -->
                                                 <div class="mb-3">
-                                                    <label for="domainCost" class="form-label">SSL Cost</label>
+                                                    <label for="domainCost" class="form-label">SSL Cost
+                                                        (&#x20B9;)</label>
                                                     <input type="text" class="form-control" readonly id="Vssl_cost"
                                                         name="ssl_cost">
                                                     <div class="invalid-feedback" class="text-danger" id="ssl_cost_msg">
@@ -629,6 +640,18 @@
         </div>
     </div>
 
+
+    <!-- calculate date and show warning message 
+    <script>
+        // Calculate remaining time to expire domain
+        const startDateInput = $("#Vdomain_register");
+        const endDateInput = $("#Vdomain_expiry");
+        const resultText = $("#result");
+         // Function to calculate date difference
+
+    </script> -->
+
+    
     <!-- Data Table -->
     <script>
         $(document).ready(function () {
@@ -651,24 +674,30 @@
                 if ((domainChecked && sslChecked) || (domainChecked && hostingChecked) || (domainChecked && sslChecked && hostingChecked)) {
                     // ssl feild hide
                     $("#labelDomain").hide();
-                    $('#domain-Name').hide();
+                    $('#Domain-Name').hide();
+                    $('.mandatoryssl').hide();
                     // hosting field hide
                     $('#hostlabelDomain').hide();
                     $('#domainName').hide();
+                    $('.mandatory').hide();
                 }
                 else if (sslChecked && hostingChecked) {
                     $("#labelDomain").hide();
-                    $('#domain-Name').hide();
+                    $('#Domain-Name').hide();
+                    $('.mandatoryssl').hide();
                     $('#domainName').show();
                     $('#hostlabelDomain').show();
+                    $('.mandatory').show();
                 }
                 else if (sslChecked) {
                     $("#labelDomain").show();
-                    $('#domain-Name').show();
+                    $('#Domain-Name').show();
+                    $('.mandatoryssl').show();
                 }
                 else if (hostingChecked) {
                     $('#domainName').show();
                     $('#hostlabelDomain').show();
+                    $('.mandatory').show();
                 }
 
             });
@@ -677,7 +706,7 @@
     </script>
 
     <!--  Modal container adjust css -->
-    <script>
+    <!-- <script>
         $(document).ready(function () {
             $('input[type="checkbox"]').on('change', function () {
                 if ($('input[type="checkbox"]:checked').length > 0) {
@@ -687,9 +716,9 @@
                 }
             });
         });
-    </script>
-    <!--  Hide/Show Container  -->
+    </script> -->
 
+    <!--  Hide/Show Container  -->
     <script>
         $(document).ready(function () {
             $('.checkbox').change(function () {
@@ -720,6 +749,7 @@
         });
     </script>
 
+<!-- // Data Insertion -->
     <script>
         $(document).ready(function () {
             // Data Insertion
@@ -770,7 +800,7 @@
                         'domainId': domainId
                     },
                     success: function (response) {
-                        console.log(response);
+                        // console.log(response);
                         $.each(response, function (key, value) {
                             $('#Vdomain_name').val(value['domain_name']);
                             $('#Vdomain_expiry').val(value['domain_expiry']);
@@ -814,7 +844,7 @@
                         '<td>' + value['client_name'] + '</td>' +
                         '<td>' + value['email'] + '</td>' +
                         '<td>' + '<a href="#" data-bs-toggle="modal" data-bs-target="#viewModal" class="view" >View</a>' + '</td>' +
-                        '</tr>');
+                        '</tr>'); 
                 });
             }
         });
