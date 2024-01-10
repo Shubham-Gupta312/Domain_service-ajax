@@ -392,5 +392,10 @@ class HomeController extends BaseController
         $data['domainInfo'] = $view_data->find($domainId);
         return $this->response->setJSON($data);
     }
+
+    public function update()
+    {
+        echo "Update Function";
+    }
 }
 

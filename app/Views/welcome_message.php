@@ -615,11 +615,11 @@
                                                 </div>
                                             </div>
                                             <div class="mb-3">
-                                                <label for="expiryDate" class="form-label">Domain Expiry Date</label>
-                                                <input type="date" class="form-control" name="domain_expiry"
-                                                    id="Vdomain_expiry">
+                                                <label for="expiryDate" class="form-label">Domain Registration Date</label>
+                                                <input type="date" class="form-control" name="domain_regs"
+                                                    id="domain_regs">
                                                 <div class="invalid-feedback" class="text-danger"
-                                                    id="domain_expiry_msg">
+                                                    id="domain_regs_msg">
                                                 </div>
                                             </div>
                                             <!-- More domain-related fields can go here -->
@@ -627,22 +627,13 @@
                                         <div class="col-md-3">
                                             <!-- Right Column -->
                                             <div class="mb-3">
-                                                <label for="domainCost" class="form-label">Domain Cost
-                                                    (&#x20B9;)</label>
-                                                <input type="text" class="form-control" id="Vdomain_cost"
-                                                    name="domain_cost">
-                                                <div class="invalid-feedback" class="text-danger" id="domain_cost_msg">
+                                                <label for="expiryDate" class="form-label">Domain Expiry Date</label>
+                                                <input type="date" class="form-control" name="domain_exp"
+                                                    id="domain_exp">
+                                                <div class="invalid-feedback" class="text-danger"
+                                                    id="domain_exp_msg">
                                                 </div>
                                             </div>
-                                            <div class="mb-3">
-                                                <label for="sellingCost" class="form-label">Selling Cost
-                                                    (&#x20B9;)</label>
-                                                <input type="text" class="form-control" id="Vselling_cost"
-                                                    name="selling_cost">
-                                                <div class="invalid-feedback" class="text-danger" id="selling_cost_msg">
-                                                </div>
-                                            </div>
-                                            <!-- More domain-related fields can go here -->
                                         </div>
                                     </div>
                                 </div>
@@ -984,6 +975,15 @@
         $(document).on('click', '.renew-button', function () {
             // console.log('Renew button clicked');
             $('#renewModal').modal('show');
+        });
+        $.ajax({
+            method: "POST",
+            url: "<?= base_url('update') ?>",
+            data: "data",
+            dataType: "dataType",
+            success: function (response) {
+                
+            }
         });
 
     </script>

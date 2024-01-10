@@ -20,3 +20,6 @@ $routes->get('/retrive_data', 'HomeController::retrive_data');
 
 // view data of particular id
 $routes->post('/view_data', 'HomeController::view_data');
+
+// update the data
+$routes->post('/update', 'HomeController::update');
