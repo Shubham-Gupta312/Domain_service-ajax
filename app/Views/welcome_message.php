@@ -827,14 +827,14 @@
             method: "GET",
             url: "<?= base_url('retrive_data') ?>",
             success: function (response) {
+                // console.log(value['name']);
                 $.each(response.domain, function (key, value) {
-                    // console.log(value['name']);
-                    $('.domainInfo').append('<tr>' +
+                    const row = $('<tr>' +
                         '<th scope="row" class="domainId">' + value['id'] + '</th>' +
                         '<td>' + value['domain_name'] + '</td>' +
                         '<td>' +
-                        '<span id="result">' + value['domain_expiry'] + '</span>' +
-                        '<br><small id="days"></small>' +
+                        '<span class="result">' + value['domain_expiry'] + '</span>' +
+                        '<br><small class="days"></small>' +
                         '</td>' +
                         '<td>' + value['hosting_expiry'] + '</td>' +
                         '<td>' + value['ssl_expiry'] + '</td>' +
@@ -844,35 +844,47 @@
                         '<td>' + '<a href="#" data-bs-toggle="modal" data-bs-target="#viewModal" class="view" >View</a>' + '</td>' +
                         '</tr>');
 
-                    var startDateInput = value['domain_register'];
-                    var expiryDateInput = value['domain_expiry']
+                    $('.domainInfo').append(row);
+
+                    const startDateInput = value['domain_register'];
+                    const expiryDateInput = value['domain_expiry'];
+
                     if (startDateInput && expiryDateInput) {
-                        // console.log(startDateInput, 'startDate');
+                         // console.log(startDateInput, 'startDate');
                         // console.log(expiryDateInput, 'expiryDate');
                         const startDate = new Date(startDateInput);
                         const endDate = new Date(expiryDateInput);
                         const today = new Date();
-                        const resultTxt = $('#result')
 
                         if (!isNaN(startDate.getTime()) && !isNaN(endDate.getTime())) {
                             if (endDate < today) {
                                 // console.log('The domain has expired. Please renew it.');
-                                $('#result').text('The domain has expired.');
+                                row.find('.result').text('The domain has expired.');
                             } else {
                                 const difference = Math.abs(endDate - startDate);
                                 const differenceInDays = Math.ceil(difference / (1000 * 60 * 60 * 24));
-
-                                // console.log(`The domain will expire in ${differenceInDays} days.`);
+                                // console.log(`startDate: ${startDateInput}, expiryDate: ${expiryDateInput}, The domain will expire in ${differenceInDays} days.`);
 
                                 if (differenceInDays <= 30) {
-                                    // console.log('Domain is expiring soon');
-                                    $('#result').css('color', 'red');
-                                    $('#days').text(differenceInDays + 'days').css('color', 'red');
+                                     // console.log('Domain is expiring soon');
+                                    row.find('.result').css('color', 'red').text(value['domain_expiry']);
+                                    row.find('.days').text(differenceInDays + ' days').css('color', 'red');
+                                    // Create a table cell with a "Renew" button if needed
+                                    var renewButtonCell = $('<td>').append(
+                                        $('<button>').text('Renew').addClass('renew-button btn btn-info')
+                                    );
+                                    // Append the new table cell to the table row
+                                    $('.domainInfo tr:last').append(renewButtonCell);
+
+                                } else {
+                                    // Hide the "Renew" button cell if the domain is not expiring soon
+                                    $('.renew-button').hide();
                                 }
                             }
                         }
                     }
                 });
+
             }
         });
     </script>
