@@ -591,6 +591,71 @@
                 </div>
             </div>
 
+            <!-- Renew Modal -->
+            <div class="modal fade" id="renewModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Renew Domain</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="renewForm">
+                                <div class="container">
+                                    <div class="row">
+                                        <h2>Domain Renew Info:</h2>
+                                        <div class="col-md-3">
+                                            <!-- Left Column -->
+                                            <div class="mb-3">
+                                                <label for="domainName" class="form-label">Domain Name</label>
+                                                <input type="text" class="form-control" id="Vdomain_name"
+                                                    name="domain_name">
+                                                <div class="invalid-feedback" class="text-danger" id="domain_name_msg">
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="expiryDate" class="form-label">Domain Expiry Date</label>
+                                                <input type="date" class="form-control" name="domain_expiry"
+                                                    id="Vdomain_expiry">
+                                                <div class="invalid-feedback" class="text-danger"
+                                                    id="domain_expiry_msg">
+                                                </div>
+                                            </div>
+                                            <!-- More domain-related fields can go here -->
+                                        </div>
+                                        <div class="col-md-3">
+                                            <!-- Right Column -->
+                                            <div class="mb-3">
+                                                <label for="domainCost" class="form-label">Domain Cost
+                                                    (&#x20B9;)</label>
+                                                <input type="text" class="form-control" id="Vdomain_cost"
+                                                    name="domain_cost">
+                                                <div class="invalid-feedback" class="text-danger" id="domain_cost_msg">
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="sellingCost" class="form-label">Selling Cost
+                                                    (&#x20B9;)</label>
+                                                <input type="text" class="form-control" id="Vselling_cost"
+                                                    name="selling_cost">
+                                                <div class="invalid-feedback" class="text-danger" id="selling_cost_msg">
+                                                </div>
+                                            </div>
+                                            <!-- More domain-related fields can go here -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
 
             <!-- Data Content -->
             <div class="dashboard__content">
@@ -821,8 +886,8 @@
         });
     </script>
 
+    <!-- // Retrive data -->
     <script>
-        // Retrive data
         $.ajax({
             method: "GET",
             url: "<?= base_url('retrive_data') ?>",
@@ -836,11 +901,11 @@
                         '<span class="result">' + value['domain_expiry'] + '</span>' +
                         '<br><small class="days"></small>' +
                         '</td>' +
-                        '<td>' + value['hosting_expiry'] + '</td>' +
-                        '<td>' + value['ssl_expiry'] + '</td>' +
-                        '<td>' + value['phone'] + '</td>' +
-                        '<td>' + value['client_name'] + '</td>' +
-                        '<td>' + value['email'] + '</td>' +
+                        '<td class="hstExpiry">' + value['hosting_expiry'] + '</td>' +
+                        '<td class="sslExpiry" >' + value['ssl_expiry'] + '</td>' +
+                        '<td class="phone">' + value['phone'] + '</td>' +
+                        '<td class="clientName">' + value['client_name'] + '</td>' +
+                        '<td class="email">' + value['email'] + '</td>' +
                         '<td>' + '<a href="#" data-bs-toggle="modal" data-bs-target="#viewModal" class="view" >View</a>' + '</td>' +
                         '</tr>');
 
@@ -850,7 +915,7 @@
                     const expiryDateInput = value['domain_expiry'];
 
                     if (startDateInput && expiryDateInput) {
-                         // console.log(startDateInput, 'startDate');
+                        // console.log(startDateInput, 'startDate');
                         // console.log(expiryDateInput, 'expiryDate');
                         const startDate = new Date(startDateInput);
                         const endDate = new Date(expiryDateInput);
@@ -866,7 +931,7 @@
                                 // console.log(`startDate: ${startDateInput}, expiryDate: ${expiryDateInput}, The domain will expire in ${differenceInDays} days.`);
 
                                 if (differenceInDays <= 30) {
-                                     // console.log('Domain is expiring soon');
+                                    // console.log('Domain is expiring soon');
                                     row.find('.result').css('color', 'red').text(value['domain_expiry']);
                                     row.find('.days').text(differenceInDays + ' days').css('color', 'red');
                                     // Create a table cell with a "Renew" button if needed
@@ -882,11 +947,45 @@
                                 }
                             }
                         }
+                    } else if (!(startDateInput && expiryDateInput)) {
+                        // console.log('no data');
+                        row.find('.result').css('color', '#7eccbf').text('-- No Data --');
+                    }
+
+                    var hstExpr = value['hosting_expiry'];
+                    var sslExpr = value['ssl_expiry'];
+                    var email = value['email'];
+                    var phone = value['phone'];
+                    var clientName = value['client_name'];
+                    if (!hstExpr) {
+                        row.find('.hstExpiry').css('color', '#7eccbf').text('-- No Data --');
+                    }
+                    if (!sslExpr) {
+                        row.find('.sslExpiry').css('color', '#7eccbf').text('-- No Data --');
+                    }
+                    if (!email) {
+                        row.find('.email').css('color', '#7eccbf').text('-- No Data --');
+                    }
+                    if (!phone) {
+                        row.find('.phone').css('color', '#7eccbf').text('-- No Data --');
+                    }
+                    if (!clientName) {
+                        row.find('.clientName').css('color', '#7eccbf').text('-- No Data --');
                     }
                 });
 
             }
         });
+
+    </script>
+
+    <!-- for Update the data  -->
+    <script>
+        $(document).on('click', '.renew-button', function () {
+            // console.log('Renew button clicked');
+            $('#renewModal').modal('show');
+        });
+
     </script>
 </body>
 
