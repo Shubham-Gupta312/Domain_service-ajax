@@ -307,11 +307,10 @@ class HomeController extends BaseController
                     ]
                 ]
             ];
-            // Check if both hosting and SSL checkboxes are not checked
-            if (!($this->request->getPost('hosting_checkbox') && $this->request->getPost('ssl_checkbox'))) {
-                // Add domain name validation rules when SSL is checked and hosting is not checked
+            // applicable only if domain not checked (no dependency over ssl)
+            if (!$this->request->getPost('domain_checkbox')) {
                 $validationRules += [
-                    'Domain-Name' => [
+                    'domainName' => [
                         'rules' => 'required',
                         'errors' => [
                             'required' => 'Domain Name is required',
@@ -319,7 +318,8 @@ class HomeController extends BaseController
                     ]
                 ];
             }
-            if (!($this->request->getPost('domain_checkbox') && $this->request->getPost('ssl_checkbox'))) {
+            // applicable only when domain and hosting not checked. If any one of them checked it will not be applicable			
+            if (!$this->request->getPost('domain_checkbox') && !$this->request->getPost('hosting_checkbox')) {
                 $validationRules += [
                     'Domain-Name' => [
                         'rules' => 'required',
@@ -355,6 +355,7 @@ class HomeController extends BaseController
             $dmnChk = $this->request->getPost('domain_checkbox');
             $hstChk = $this->request->getPost('hosting_checkbox');
             $sslChk = $this->request->getPost('ssl_checkbox');
+
             if ($dmnChk) {
                 $data['domain_name'] = $this->request->getPost('domain_name');
             } else if ($hstChk || ($hstChk && $sslChk)) {

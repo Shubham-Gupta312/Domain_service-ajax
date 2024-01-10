@@ -190,7 +190,8 @@
                                             <div class="col-md-3">
                                                 <!-- Left Column -->
                                                 <div class="mb-3">
-                                                    <label for="domainName" class="form-label">Domain Name</label><span class="text-danger">*</span>
+                                                    <label for="domainName" class="form-label">Domain Name</label><span
+                                                        class="text-danger">*</span>
                                                     <input type="text" class="form-control" id="domain_name"
                                                         name="domain_name">
                                                     <div class="invalid-feedback" class="text-danger"
@@ -252,13 +253,15 @@
                                             <div class="col-md-3">
                                                 <!-- Right Column -->
                                                 <div class="mb-3">
-                                                    <label for="email" class="form-label">Registered Email</label><span class="text-danger">*</span>
+                                                    <label for="email" class="form-label">Registered Email</label><span
+                                                        class="text-danger">*</span>
                                                     <input type="email" class="form-control" id="email" name="email">
                                                     <div class="invalid-feedback" class="text-danger" id="email_msg">
                                                     </div>
                                                 </div>
                                                 <div class="mb-3">
-                                                    <label for="contact" class="form-label">Phone/Mobile No.</label><span class="text-danger">*</span>
+                                                    <label for="contact" class="form-label">Phone/Mobile
+                                                        No.</label><span class="text-danger">*</span>
                                                     <input type="text" class="form-control" id="phone" name="phone">
                                                     <div class="invalid-feedback" class="text-danger" id="phone_msg">
                                                     </div>
@@ -267,7 +270,8 @@
                                             </div>
                                             <div class="col-md-3">
                                                 <div class="mb-3">
-                                                    <label for="company" class="form-label">Company Name</label><span class="text-danger">*</span>
+                                                    <label for="company" class="form-label">Company Name</label><span
+                                                        class="text-danger">*</span>
                                                     <input type="text" class="form-control" id="company_name"
                                                         name="company_name">
                                                     <div class="invalid-feedback" class="text-danger"
@@ -288,7 +292,8 @@
                                             </div>
                                             <div class="col-md-3">
                                                 <div class="mb-3">
-                                                    <label for="renewalDate" class="form-label">Client Name</label><span class="text-danger">*</span>
+                                                    <label for="renewalDate" class="form-label">Client Name</label><span
+                                                        class="text-danger">*</span>
                                                     <input type="text" class="form-control" name="client_name"
                                                         id="client_name">
                                                     <div class="invalid-feedback" class="text-danger"
@@ -305,7 +310,8 @@
                                             <div class="row">
                                                 <div class="col-md-5">
                                                     <div class="mb-3">
-                                                        <label for="expiryDate" class="form-label">Expiry Date</label><span class="text-danger">*</span>
+                                                        <label for="expiryDate" class="form-label">Expiry
+                                                            Date</label><span class="text-danger">*</span>
                                                         <input type="date" class="form-control" name="hosting_expiry"
                                                             id="hosting_expiry">
                                                         <div class="invalid-feedback" class="text-danger"
@@ -331,7 +337,8 @@
                                                     </div>
                                                     <div class="mb-3">
                                                         <label for="hostingCost" id="hostlabelDomain"
-                                                            class="form-label">Domain Name</label><span class="text-danger mandatory">*</span>
+                                                            class="form-label">Domain Name</label><span
+                                                            class="text-danger mandatory">*</span>
                                                         <input type="text" class="form-control" id="domainName"
                                                             name="domainName">
                                                         <div class="invalid-feedback" class="text-danger"
@@ -640,18 +647,6 @@
         </div>
     </div>
 
-
-    <!-- calculate date and show warning message 
-    <script>
-        // Calculate remaining time to expire domain
-        const startDateInput = $("#Vdomain_register");
-        const endDateInput = $("#Vdomain_expiry");
-        const resultText = $("#result");
-         // Function to calculate date difference
-
-    </script> -->
-
-    
     <!-- Data Table -->
     <script>
         $(document).ready(function () {
@@ -749,7 +744,7 @@
         });
     </script>
 
-<!-- // Data Insertion -->
+    <!-- // Data Insertion -->
     <script>
         $(document).ready(function () {
             // Data Insertion
@@ -837,14 +832,46 @@
                     $('.domainInfo').append('<tr>' +
                         '<th scope="row" class="domainId">' + value['id'] + '</th>' +
                         '<td>' + value['domain_name'] + '</td>' +
-                        '<td>' + value['domain_expiry'] + '</td>' +
+                        '<td>' +
+                        '<span id="result">' + value['domain_expiry'] + '</span>' +
+                        '<br><small id="days"></small>' +
+                        '</td>' +
                         '<td>' + value['hosting_expiry'] + '</td>' +
                         '<td>' + value['ssl_expiry'] + '</td>' +
                         '<td>' + value['phone'] + '</td>' +
                         '<td>' + value['client_name'] + '</td>' +
                         '<td>' + value['email'] + '</td>' +
                         '<td>' + '<a href="#" data-bs-toggle="modal" data-bs-target="#viewModal" class="view" >View</a>' + '</td>' +
-                        '</tr>'); 
+                        '</tr>');
+
+                    var startDateInput = value['domain_register'];
+                    var expiryDateInput = value['domain_expiry']
+                    if (startDateInput && expiryDateInput) {
+                        // console.log(startDateInput, 'startDate');
+                        // console.log(expiryDateInput, 'expiryDate');
+                        const startDate = new Date(startDateInput);
+                        const endDate = new Date(expiryDateInput);
+                        const today = new Date();
+                        const resultTxt = $('#result')
+
+                        if (!isNaN(startDate.getTime()) && !isNaN(endDate.getTime())) {
+                            if (endDate < today) {
+                                // console.log('The domain has expired. Please renew it.');
+                                $('#result').text('The domain has expired.');
+                            } else {
+                                const difference = Math.abs(endDate - startDate);
+                                const differenceInDays = Math.ceil(difference / (1000 * 60 * 60 * 24));
+
+                                // console.log(`The domain will expire in ${differenceInDays} days.`);
+
+                                if (differenceInDays <= 30) {
+                                    // console.log('Domain is expiring soon');
+                                    $('#result').css('color', 'red');
+                                    $('#days').text(differenceInDays + 'days').css('color', 'red');
+                                }
+                            }
+                        }
+                    }
                 });
             }
         });
