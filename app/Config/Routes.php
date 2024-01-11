@@ -21,5 +21,7 @@ $routes->get('/retrive_data', 'HomeController::retrive_data');
 // view data of particular id
 $routes->post('/view_data', 'HomeController::view_data');
 
+// edit the data
+$routes->post('/edit', 'HomeController::edit');
 // update the data
-$routes->post('/update', 'HomeController::update');
+$routes->post('/update_data', "HomeController::update_data");

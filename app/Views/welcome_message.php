@@ -607,19 +607,20 @@
                                         <h2>Domain Renew Info:</h2>
                                         <div class="col-md-3">
                                             <!-- Left Column -->
+                                            <input type="hidden" name="id" id="domain_id">
                                             <div class="mb-3">
                                                 <label for="domainName" class="form-label">Domain Name</label>
-                                                <input type="text" class="form-control" id="Vdomain_name"
-                                                    name="domain_name">
-                                                <div class="invalid-feedback" class="text-danger" id="domain_name_msg">
+                                                <input type="text" class="form-control" id="RdomainName"
+                                                    name="RdomainName" readonly>
+                                                <div class="invalid-feedback" class="text-danger" id="RdomainName_msg">
                                                 </div>
                                             </div>
                                             <div class="mb-3">
-                                                <label for="expiryDate" class="form-label">Domain Registration Date</label>
-                                                <input type="date" class="form-control" name="domain_regs"
-                                                    id="domain_regs">
-                                                <div class="invalid-feedback" class="text-danger"
-                                                    id="domain_regs_msg">
+                                                <label for="RegDate" class="form-label">Domain Registration
+                                                    Date</label>
+                                                <input type="date" name="domain_regs" id="domain_regs"
+                                                    class="form-control">
+                                                <div class="invalid-feedback" class="text-danger" id="domain_regs_msg">
                                                 </div>
                                             </div>
                                             <!-- More domain-related fields can go here -->
@@ -628,10 +629,9 @@
                                             <!-- Right Column -->
                                             <div class="mb-3">
                                                 <label for="expiryDate" class="form-label">Domain Expiry Date</label>
-                                                <input type="date" class="form-control" name="domain_exp"
-                                                    id="domain_exp">
-                                                <div class="invalid-feedback" class="text-danger"
-                                                    id="domain_exp_msg">
+                                                <input type="date" name="domain_exp" id="domain_exp"
+                                                    class="form-control">
+                                                <div class="invalid-feedback" class="text-danger" id="domain_exp_msg">
                                                 </div>
                                             </div>
                                         </div>
@@ -641,7 +641,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Save changes</button>
+                            <button type="button" id="update" class="btn btn-primary">Save changes</button>
                         </div>
                     </div>
                 </div>
@@ -757,7 +757,7 @@
     </script>
 
     <!--  Modal container adjust css -->
-    <!-- <script>
+    <script>
         $(document).ready(function () {
             $('input[type="checkbox"]').on('change', function () {
                 if ($('input[type="checkbox"]:checked').length > 0) {
@@ -767,7 +767,7 @@
                 }
             });
         });
-    </script> -->
+    </script>
 
     <!--  Hide/Show Container  -->
     <script>
@@ -884,16 +884,36 @@
             url: "<?= base_url('retrive_data') ?>",
             success: function (response) {
                 // console.log(value['name']);
+
+                // Function to format date as dd-mm-yyyy
+                function formatDate(date) {
+                    const day = date.getDate().toString().padStart(2, '0');
+                    // console.log(day);
+                    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+                    const year = date.getFullYear();
+                    return `${day}-${month}-${year}`;
+                }
+
                 $.each(response.domain, function (key, value) {
+                    // Convert date strings to Date objects
+                    const domainExpiryDate = new Date(value['domain_expiry']);
+                    const hostingExpiryDate = new Date(value['hosting_expiry']);
+                    const sslExpiryDate = new Date(value['ssl_expiry']);
+
+                    // Format dates as dd-mm-yyyy
+                    const domainExpiryFormatted = formatDate(domainExpiryDate);
+                    const hostingExpiryFormatted = formatDate(hostingExpiryDate);
+                    const sslExpiryFormatted = formatDate(sslExpiryDate);
+
                     const row = $('<tr>' +
                         '<th scope="row" class="domainId">' + value['id'] + '</th>' +
                         '<td>' + value['domain_name'] + '</td>' +
                         '<td>' +
-                        '<span class="result">' + value['domain_expiry'] + '</span>' +
+                        '<span class="result">' + domainExpiryFormatted + '</span>' +
                         '<br><small class="days"></small>' +
                         '</td>' +
-                        '<td class="hstExpiry">' + value['hosting_expiry'] + '</td>' +
-                        '<td class="sslExpiry" >' + value['ssl_expiry'] + '</td>' +
+                        '<td class="hstExpiry">' + hostingExpiryFormatted + '</td>' +
+                        '<td class="sslExpiry" >' + sslExpiryFormatted + '</td>' +
                         '<td class="phone">' + value['phone'] + '</td>' +
                         '<td class="clientName">' + value['client_name'] + '</td>' +
                         '<td class="email">' + value['email'] + '</td>' +
@@ -915,32 +935,30 @@
                         if (!isNaN(startDate.getTime()) && !isNaN(endDate.getTime())) {
                             if (endDate < today) {
                                 // console.log('The domain has expired. Please renew it.');
-                                row.find('.result').text('The domain has expired.');
+                                row.find('.result').css('color', 'red').text('The domain has expired.');
                             } else {
                                 const difference = Math.abs(endDate - startDate);
                                 const differenceInDays = Math.ceil(difference / (1000 * 60 * 60 * 24));
                                 // console.log(`startDate: ${startDateInput}, expiryDate: ${expiryDateInput}, The domain will expire in ${differenceInDays} days.`);
 
                                 if (differenceInDays <= 30) {
-                                    // console.log('Domain is expiring soon');
-                                    row.find('.result').css('color', 'red').text(value['domain_expiry']);
+                                    row.find('.result').css('color', 'red').text(domainExpiryFormatted);
                                     row.find('.days').text(differenceInDays + ' days').css('color', 'red');
-                                    // Create a table cell with a "Renew" button if needed
-                                    var renewButtonCell = $('<td>').append(
-                                        $('<button>').text('Renew').addClass('renew-button btn btn-info')
-                                    );
-                                    // Append the new table cell to the table row
-                                    $('.domainInfo tr:last').append(renewButtonCell);
 
-                                } else {
-                                    // Hide the "Renew" button cell if the domain is not expiring soon
-                                    $('.renew-button').hide();
+                                    // Append the "Renew" button to the renew-cell
+                                    var renewButton = $('<button>').text('Renew').addClass('renew-button btn btn-info');
+                                    var renewButtonCell = $('<td class="renew-cell">').append(renewButton);
+                                    row.append(renewButtonCell);
                                 }
                             }
                         }
                     } else if (!(startDateInput && expiryDateInput)) {
                         // console.log('no data');
                         row.find('.result').css('color', '#7eccbf').text('-- No Data --');
+                    }
+                    // Check if the domain has been recently renewed, hide the "Renew" button
+                    if (value['recently_renewed']) {
+                        row.find('.renew-button').hide();
                     }
 
                     var hstExpr = value['hosting_expiry'];
@@ -970,20 +988,50 @@
 
     </script>
 
-    <!-- for Update the data  -->
+    <!-- for edit the data and renewal modal open-->
     <script>
         $(document).on('click', '.renew-button', function () {
             // console.log('Renew button clicked');
-            $('#renewModal').modal('show');
+            var domain_Id = $(this).closest('tr').find('.domainId').text();
+            $("#domain_id").val(domain_Id);
+            // console.log(domain_Id);
+            $.ajax({
+                method: "POST",
+                url: "<?= base_url('edit') ?>",
+                data: {
+                    'domainID': domain_Id
+                },
+                success: function (response) {
+                    $.each(response, function (key, domain_value) {
+                        // console.log($('#RdomainName').val(domain_value['domain_name'])); 
+                        $('#RdomainName').val(domain_value['domain_name']);
+                        $('#domain_regs').val(domain_value['domain_register']);
+                        // console.log(domReg);
+                        $('#domain_exp').val(domain_value['domain_expiry']);
+                        $('#renewModal').modal('show');
+                    });
+                }
+            });
         });
-        $.ajax({
-            method: "POST",
-            url: "<?= base_url('update') ?>",
-            data: "data",
-            dataType: "dataType",
-            success: function (response) {
-                
-            }
+        // Update the data 
+        $('#update').click(function (e) {
+            e.preventDefault();
+            // console.log('clicked');
+            var data = {
+                'id': $('#domain_id').val(),
+                'domain_regs': $('#domain_regs').val(),
+                'domain_exp': $('#domain_exp').val(),
+            };
+            console.log(data); // Log data before sending
+            $.ajax({
+                method: "POST",
+                url: "<?= base_url('update_data') ?>",
+                data: data,
+                success: function (response) {
+                    $('#renewModal').modal('hide');
+                    // console.log(response.status);
+                }
+            });
         });
 
     </script>

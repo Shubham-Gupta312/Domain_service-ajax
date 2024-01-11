@@ -393,9 +393,39 @@ class HomeController extends BaseController
         return $this->response->setJSON($data);
     }
 
-    public function update()
+    public function edit()
     {
-        echo "Update Function";
+        $edit_data = new \App\Models\DomainInfoModel();
+        $domainId = $this->request->getPost('domainID');
+        $data['domain'] = $edit_data->find($domainId);
+        return $this->response->setJSON($data);
     }
+
+    public function update_data()
+    {
+        $update_data = new \App\Models\DomainInfoModel();
+        $domainId = $this->request->getPost('id');
+        $data = [
+            // 'domain_name' => $this->request->getPost('RdomainName'),
+            'domain_register' => $this->request->getPost('domain_regs'),
+            'domain_expiry' => $this->request->getPost('domain_exp'),
+        ];
+        // / Debugging: Check data before update
+        // var_dump($data);
+        // print_r($_POST); 
+        $result = $update_data->update($domainId, $data);
+        // echo $update_data->getLastQuery();
+        // Debugging: Check the result of the update operation
+        // var_dump($result);
+        if (!$result) {
+            $message = ['status' => 'error', 'message' => "Something went Wrong!"];
+            return $this->response->setJSON($message);
+        } else {
+            $message = ['status' => 'success', 'message' => "Data Updated Successfully!"];
+            return $this->response->setJSON($message);  
+        }
+        
+    }
+    
 }
 
