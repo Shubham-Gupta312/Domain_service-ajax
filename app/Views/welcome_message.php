@@ -58,6 +58,10 @@
         margin-top: 12px;
     }
 
+    .no-data-cell {
+        color: #7eccbf;
+    }
+
     input {
         color: #333;
     }
@@ -713,14 +717,6 @@
 
 
     <script>
-        //  <!-- Data Table -->
-        // $(document).ready(function () {
-        //     // let table = new DataTable('#myTable');
-        //     setTimeout(function () {
-        //         $('#myTable').DataTable();
-        //     }, 400);
-        // });
-
         // <!-- domain name hide or show  -->
         $('input[type="checkbox"]').on('change', function () {
             var sslChecked = $('input[value="ssl"]').is(':checked');
@@ -830,49 +826,93 @@
 
         // <!-- Fetching data of particular id-->
         $(document).on('click', '.view', function () {
-            var domainId = $(this).closest('tr').find('.domainId').text();
-            // console.log(domainId);
-            $.ajax({
-                method: "POST",
-                url: "<?= base_url('view_data') ?>",
-                data: {
-                    'domainId': domainId
-                },
-                success: function (response) {
-                    // console.log(response);
-                    $.each(response, function (key, value) {
-                        $('#Vdomain_name').val(value['domain_name']);
-                        $('#Vdomain_expiry').val(value['domain_expiry']);
-                        $('#Vdomain_cost').val(value['domain_cost']);
-                        $('#Vselling_cost').val(value['selling_cost']);
-                        $('#Vdomain_provider').val(value['domain_provider']);
-                        $('#Vdomain_register').val(value['domain_register']);
-                        $('#Vemail').val(value['email']);
-                        $('#Vphone').val(value['phone']);
-                        $('#Vcompany_name').val(value['company_name']);
-                        $('#Vdomain_renew').val(value['domain_renew']);
-                        $('#Vclient_name').val(value['client_name']);
-                        $('#Vhosting_expiry').val(value['hosting_expiry']);
-                        $('#Vhosting_space').val(value['hosting_space']);
-                        $('#Vhosting_cost').val(value['hosting_cost']);
-                        $('#Vssl_expiry').val(value['ssl_expiry']);
-                        $('#Vssl_cost').val(value['ssl_cost']);
-                        // $("#viewModal").modal('');
-                    });
-                }
-            });
+            // Get the DataTable instance
+            var table = $('#myTable').DataTable();
+            // Get the clicked row
+            var row = $(this).closest('tr');
+            // Get the data for the clicked row
+            var rowData = table.row(row).data();
+            // console.log(rowData[0]);
+            var id = rowData[0];
+            // console.log(id);
+            // Make sure a rowId is available before making the AJAX request
+            if (id) {
+                // AJAX request with the rowId
+                $.ajax({
+                    method: "POST",
+                    url: "<?= base_url('view_data') ?>",
+                    data: {
+                        'domainId': id  // Corrected variable name here
+                    },
+                    success: function (response) {
+                        // console.log(response);  // Log the response to the console
+                        var domainName = response.domainInfo.domain_name; // console.log(domainName);
+                        var domainExpiry = response.domainInfo.domain_expiry;
+                        var domainCost = response.domainInfo.domain_cost;
+                        var domainRegister = response.domainInfo.domain_register;
+                        var domainSellingCost = response.domainInfo.selling_cost;
+                        var domainProvider = response.domainInfo.domain_provider;
+                        var regiteredEmail = response.domainInfo.email;
+                        var regiteredPhone = response.domainInfo.phone;
+                        var companyName = response.domainInfo.company_name;
+                        var domainRenew = response.domainInfo.domain_renew;
+                        var clientName = response.domainInfo.client_name;
+                        var hostingExpiry = response.domainInfo.hosting_expiry;
+                        var hostingSpace = response.domainInfo.hosting_space;
+                        var hostingCost = response.domainInfo.hosting_cost;
+                        var sslExpiry = response.domainInfo.ssl_expiry;
+                        var sslCost = response.domainInfo.ssl_cost;
+
+                        $('#Vdomain_name').val(domainName);
+                        $('#Vdomain_expiry').val(domainExpiry);
+                        $('#Vdomain_cost').val(domainCost);
+                        $('#Vselling_cost').val(domainSellingCost);
+                        $('#Vdomain_provider').val(domainProvider);
+                        $('#Vdomain_register').val(domainRegister);
+                        $('#Vemail').val(regiteredEmail);
+                        $('#Vphone').val(regiteredPhone);
+                        $('#Vcompany_name').val(companyName);
+                        $('#Vdomain_renew').val(domainRenew);
+                        $('#Vclient_name').val(clientName);
+                        $('#Vhosting_expiry').val(hostingExpiry);
+                        $('#Vhosting_space').val(hostingSpace);
+                        $('#Vhosting_cost').val(hostingCost);
+                        $('#Vssl_expiry').val(sslExpiry);
+                        $('#Vssl_cost').val(sslCost);
+                        $("#viewModal").modal('show');
+
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(xhr.responseText);
+                    }
+                });
+            } else {
+                console.error('Row ID not found.');
+            }
         });
+
+
 
         // Function to format date as dd-mm-yyyy
         function formatDate(date) {
-            const day = date.getDate().toString().padStart(2, '0');
-            // console.log(day);
-            const month = (date.getMonth() + 1).toString().padStart(2, '0');
-            const year = date.getFullYear();
+            if (!date) return '-- No data --';
+
+            // Convert to Date object if it's a string
+            const dateObj = typeof date === 'string' ? new Date(date) : date;
+
+            if (!(dateObj instanceof Date) || isNaN(dateObj)) {
+                return '-- Invalid date --';
+            }
+
+            const day = dateObj.getDate().toString().padStart(2, '0');
+            const month = (dateObj.getMonth() + 1).toString().padStart(2, '0');
+            const year = dateObj.getFullYear();
+
             return `${day}-${month}-${year}`;
+
         };
 
-        // server-side data table
+        // server-side data table   // <!-- Retrive data -->
         var table = $('#myTable').DataTable({
             processing: true,
             serverSide: true,
@@ -881,129 +921,113 @@
                 url: "<?= base_url('retrive_data') ?>",
                 type: "POST"
             },
-            // drawCallback: function (settings) {
-            //     console.log('Table redrawn:', settings);
-            // },
-        });
+            createdRow: function (row, data, dataIndex) {
+                // Fetch all table values
+                const dateColumnIndexes = [2, 3, 4, 9];
+                // Iterate through each cell in the row
+                $('td', row).each(function (columnIndex) {
+                    var value = data[columnIndex];
+                    // console.log(data[2]); // console.log(value)
 
-        // <!-- Retrive data -->
-        $.ajax({
-            method: "POST",
-            url: "<?= base_url('retrive_data') ?>",
-            success: function (response) {
+                    // Format date if the column index corresponds to a date column
+                    if (dateColumnIndexes.includes(columnIndex)) {
+                        value = formatDate(value);
+                    }
 
-                // $.each(response.domain, function (key, value) {
-                // Convert date strings to Date objects
-                const domainExpiryDate = new Date(value['domain_expiry']);
-                const hostingExpiryDate = new Date(value['hosting_expiry']);
-                const sslExpiryDate = new Date(value['ssl_expiry']);
+                    var displayValue = value !== null && value !== undefined && value !== '' ? value : '-- No data --';
+                    // Add a class to cells containing "No data"
+                    if (displayValue === '-- No data --') {
+                        $(this).addClass('no-data-cell');
+                    }
+                    // Set the cell content
+                    $(this).html(displayValue);
+                });
+            },
+            drawCallback: function (settings) {
+                // console.log('Table redrawn:', settings);
+                // Iterate through each row in the DataTable
+                table.rows().every(function (index, element) {
+                    // Get data for the row (including hidden columns)
+                    var rowData = this.data();
+                    // Get the row node
+                    var rowNode = this.node();
 
-                // Format dates as dd-mm-yyyy
-                const domainExpiryFormatted = formatDate(domainExpiryDate);
-                const hostingExpiryFormatted = formatDate(hostingExpiryDate);
-                const sslExpiryFormatted = formatDate(sslExpiryDate);
+                    // Fetch domain register date, expiry date, hosting expiry andd ssl expiry from the row data
+                    var domainRegister = rowData[9];
+                    var domainExpiry = rowData[2];
+                    var sslExpiry = rowData[4];
+                    var hostingExpiry = rowData[3];
+                    // Check if both domainRegister and domainExpiry are present
+                    if (domainRegister && domainExpiry) {
+                        const startDate = new Date(domainRegister);
+                        const endDate = new Date(domainExpiry);
+                        const today = new Date();
+                        // console.log(domainRegister, 'startDate');
+                        // console.log(domainExpiry, 'expiryDate');
 
-                const row = [
-                    value['id'],
-                    value['domain_name'],
-                    domainExpiryFormatted,
-                    hostingExpiryFormatted,
-                    sslExpiryFormatted,
-                    value['phone'],
-                    value['client_name'],
-                    value['email'],
-                    '<a href="#" data-bs-toggle="modal" data-bs-target="#viewModal" class="view">View</a>'
-                ];
-                // Append the row to the DataTable
-                table.row.add(row).draw();
-                // $('.domainInfo').append(row);
+                        if (!isNaN(startDate.getTime()) && !isNaN(endDate.getTime())) {
+                            if (endDate < today) {
+                                // The domain has expired. Please renew it.
+                                $(rowNode).find('td:eq(9)').css('color', 'red').text('The domain has expired.');
+                            } else {
+                                const difference = Math.abs(endDate - startDate);
+                                const differenceInDays = Math.ceil(difference / (1000 * 60 * 60 * 24));
+                                // console.log(`startDate: ${domainRegister}, expiryDate: ${domainExpiry}, The domain will expire in ${differenceInDays} days.`);
 
-                const startDateInput = value['domain_register'];
-                const expiryDateInput = value['domain_expiry'];
+                                if (differenceInDays <= 30) {
+                                    // Apply red color and show relevant information
+                                    $(rowNode).find('td:eq(2)').css('color', 'red').html(`${formatDate(domainExpiry)}<br>${differenceInDays} days`);
 
-                if (startDateInput && expiryDateInput) {
-                    // console.log(startDateInput, 'startDate');
-                    // console.log(expiryDateInput, 'expiryDate');
-                    const startDate = new Date(startDateInput);
-                    const endDate = new Date(expiryDateInput);
-                    const today = new Date();
+                                    // Create a Renew button
+                                    var renewButton = $('<button>').text('Renew').addClass('renew-button btn btn-info');
+                                    // Append the Renew button to the last column
+                                    // console.log(renewButton);
+                                    $(this.node()).find('td:eq(8)').empty().append(renewButton);
 
-                    if (!isNaN(startDate.getTime()) && !isNaN(endDate.getTime())) {
-                        if (endDate < today) {
-                            // console.log('The domain has expired. Please renew it.');
-                            row.find('.result').css('color', 'red').text('The domain has expired.');
-                        } else {
-                            const difference = Math.abs(endDate - startDate);
-                            const differenceInDays = Math.ceil(difference / (1000 * 60 * 60 * 24));
-                            // console.log(`startDate: ${startDateInput}, expiryDate: ${expiryDateInput}, The domain will expire in ${differenceInDays} days.`);
-
-                            if (differenceInDays <= 30) {
-                                row.find('.result').css('color', 'red').text(domainExpiryFormatted);
-                                row.find('.days').text(differenceInDays + ' days').css('color', 'red');
-
-                                // Append the "Renew" button to the renew-cell
-                                var renewButton = $('<button>').text('Renew').addClass('renew-button btn btn-info');
-                                var renewButtonCell = $('<td class="renew-cell">').append(renewButton);
-                                row.append(renewButtonCell);
+                                    // trigger a email to registered email-id
+                                } else {
+                                    // Show "View" for other cases
+                                    $(this.node()).find('td:eq(8)');
+                                }
                             }
                         }
                     }
-                } else if (!(startDateInput && expiryDateInput)) {
-                    // console.log('no data');
-                    row.find('.result').css('color', '#7eccbf').text('-- No Data --');
-                }
-                // Check if the domain has been recently renewed, hide the "Renew" button
-                if (value['recently_renewed']) {
-                    row.find('.renew-button').hide();
-                }
-                
-                var dmnNme = value['domain_name'];
-                var hstExpr = value['hosting_expiry'];
-                var sslExpr = value['ssl_expiry'];
-                var email = value['email'];
-                var phone = value['phone'];
-                var clientName = value['client_name'];
-                if (!hstExpr) {
-                    row.find('.hstExpiry').css('color', '#7eccbf').text('-- No Data --');
-                }
-                if (!sslExpr) {
-                    row.find('.sslExpiry').css('color', '#7eccbf').text('-- No Data --');
-                }
-                if (!email) {
-                    row.find('.email').css('color', '#7eccbf').text('-- No Data --');
-                }
-                if (!phone) {
-                    row.find('.phone').css('color', '#7eccbf').text('-- No Data --');
-                }
-                if (!clientName) {
-                    row.find('.clientName').css('color', '#7eccbf').text('-- No Data --');
-                }
-            // });
-        table.draw();
+                });
             }
+
         });
+
 
         // <!-- for edit the data and renewal modal open-->
         $(document).on('click', '.renew-button', function () {
             // console.log('Renew button clicked');
-            var domain_Id = $(this).closest('tr').find('.domainId').text();
-            $("#domain_id").val(domain_Id);
-            // console.log(domain_Id);
+             var table = $('#myTable').DataTable();
+            // Get the clicked row
+            var row = $(this).closest('tr');
+            // Get the data for the clicked row
+            var rowData = table.row(row).data();
+            // console.log(rowData[0]);
+            var id = rowData[0];
+            // assign id to update the value
+            $("#domain_id").val(id);
+            // console.log(id);
             $.ajax({
                 method: "POST",
                 url: "<?= base_url('edit') ?>",
                 data: {
-                    'domainID': domain_Id
+                    'domainID': id
                 },
                 success: function (response) {
-                    $.each(response, function (key, domain_value) {
-                        // console.log($('#RdomainName').val(domain_value['domain_name'])); 
-                        $('#RdomainName').val(domain_value['domain_name']);
-                        $('#domain_regs').val(domain_value['domain_register']);
+                    // console.log(response);
+                    var DomainName = response.domain.domain_name;
+                    var DomainExpiry = response.domain.domain_expiry;
+                    var DomainRegestration = response.domain.domain_register;
+                    // console.log(DomainName); 
+                        $('#RdomainName').val(DomainName);
+                        $('#domain_regs').val(DomainRegestration);
                         // console.log(domReg);
-                        $('#domain_exp').val(domain_value['domain_expiry']);
+                        $('#domain_exp').val(DomainExpiry);
                         $('#renewModal').modal('show');
-                    });
                 }
             });
         });
@@ -1013,12 +1037,13 @@
         $('#update').click(function (e) {
             e.preventDefault();
             // console.log('clicked');
+            
             var data = {
                 'id': $('#domain_id').val(),
                 'domain_regs': $('#domain_regs').val(),
                 'domain_exp': $('#domain_exp').val(),
             };
-            console.log(data); // Log data before sending
+            // console.log(data); // Log data before sending
             $.ajax({
                 method: "POST",
                 url: "<?= base_url('update_data') ?>",

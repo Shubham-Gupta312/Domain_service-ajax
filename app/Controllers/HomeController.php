@@ -379,60 +379,66 @@ class HomeController extends BaseController
 
 
     public function retrive_data()
-{
-    $fetchData = new \App\Models\DomainInfoModel();
-    // $data['domain'] = $fetchData->findAll();
+    {
+        $fetchData = new \App\Models\DomainInfoModel();
+        // $data['domain'] = $fetchData->findAll();
 
-    $draw = $_POST['draw'];
-    $start = $_POST['start'];
-    $length = $_POST['length'];
-    $data['domain'] = $fetchData->findAll($length, $start);
-    $associativeArray = [];
+        $draw = $_POST['draw'];
+        $start = $_POST['start'];
+        $length = $_POST['length'];
+        $data['domain'] = $fetchData->findAll($length, $start);
+        $associativeArray = [];
 
-    foreach ($data['domain'] as $row) {
-        // $tmp = array();
-        // // Assuming your table has columns like 'id', 'domain_name', 'domain_expiry', etc.
-        // $tmp[] = $row['id'];
-        // $tmp[] = $row['domain_name'];
+        foreach ($data['domain'] as $row) {
+            // $tmp = array();
+            // // Assuming your table has columns like 'id', 'domain_name', 'domain_expiry', etc.
+            // $tmp[] = $row['id'];
+            // $tmp[] = $row['domain_name'];
 
-        // $element = 
-        // $elment.= 
+            // $element = 
+            // $elment.= 
 
-        // $tmp[] = $elment;
+            // $tmp[] = $elment;
 
-        $associativeArray[] = array (
-            0=> $row['id'],
-            1 => $row['domain_name'],
-            2 => $row['domain_expiry'],
-            3 => $row['hosting_expiry'],
-            4 => $row['ssl_expiry'],
-            5 => $row['phone'],
-            6 => $row['client_name'],
-            7 => $row['email'],
-            8 => '<a href="#" data-bs-toggle="modal" data-bs-target="#viewModal" class="view">View</a>',
+            $associativeArray[] = array(
+                0 => $row['id'],
+                1 => $row['domain_name'],
+                2 => $row['domain_expiry'],
+                3 => $row['hosting_expiry'],
+                4 => $row['ssl_expiry'],
+                5 => $row['phone'],
+                6 => $row['client_name'],
+                7 => $row['email'],
+                8 => '<a href="#" data-bs-toggle="modal" data-bs-target="#viewModal" class="view">View</a>',
+                9 => $row['domain_register'],
+            );
+        }
+
+        $output = array(
+            // "draw"              =>  intval($_POST["draw"]),
+            "draw" => intval($draw),
+            // "recordsTotal"      =>  count($associativeArray),
+            // "recordsFiltered"   =>  count($associativeArray),
+            "recordsTotal" => $fetchData->countAll(),
+            "recordsFiltered" => $fetchData->countAll(),
+            "data" => $associativeArray // ur data array here
         );
+        echo json_encode($output);
+
     }
 
-    $output = array(
-        // "draw"              =>  intval($_POST["draw"]),
-        "draw"              => intval($draw),
-        // "recordsTotal"      =>  count($associativeArray),
-        // "recordsFiltered"   =>  count($associativeArray),
-        "recordsTotal"      =>  $fetchData->countAll(),
-        "recordsFiltered"   =>  $fetchData->countAll(),
-        "data"              =>  $associativeArray // ur data array here
-    );
-    echo json_encode($output);
 
-}
-
-    
     public function view_data()
     {
-        $view_data = new \App\Models\DomainInfoModel();
-        $domainId = $this->request->getPost('domainId');
-        $data['domainInfo'] = $view_data->find($domainId);
-        return $this->response->setJSON($data);
+        try {
+            $view_data = new \App\Models\DomainInfoModel();
+            $domainId = $this->request->getPost('domainId');
+            $data['domainInfo'] = $view_data->find($domainId);
+            return $this->response->setJSON($data);
+        } catch (\Exception $e) {
+            log_message('error', 'Error in view_data: ' . $e->getMessage());
+            return $this->response->setStatusCode(500)->setJSON(['error' => 'Internal Server Error']);
+        }
     }
 
     public function edit()
