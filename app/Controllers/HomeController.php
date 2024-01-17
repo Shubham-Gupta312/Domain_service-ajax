@@ -499,17 +499,26 @@ class HomeController extends BaseController
 
     }
 
-    public function fetchDataByDateRange()
+    public function fetchDataBetweenDays()
     {
+        $startDate = $this->request->getGet('startDate');
+        $endDate = $this->request->getGet('endDate');
+
+        // log_message('debug', 'Received startDate: ' . $startDate);
+        // log_message('debug', 'Received endDate: ' . $endDate);
+
+        // Your existing code to fetch data from the model
         $fetchDate = new \App\Models\DomainInfoModel();
-        $startDate = $this->request->getPost('start_date');
-        $endDate = $this->request->getPost('end_date');
-        // Fetch all data within the given date range
-        $data = $fetchDate->getAllData();
+        $data = $fetchDate->getDataBetweenDays($startDate, $endDate);
 
         // Print the data (for demonstration purposes, you can format and display it as needed)
-        var_dump($data);
+        //     echo '<pre>';
+        //     print_r($data);
+        //     echo '</pre>';
+        // Send the data as JSON response
+        return $this->response->setJSON($data);
     }
+
 
 }
 

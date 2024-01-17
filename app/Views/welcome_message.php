@@ -727,33 +727,70 @@
 
     <script>
         //Filter data acc. to date range
-        var dataTable = $('#dataTable').DataTable();
-
         $('#filterButton').on('click', function () {
             var startDate = $('#startDate').val();
             var endDate = $('#endDate').val();
             console.log(startDate, endDate);
-            // $.ajax({
-            //     url: '<?= base_url('fetchDataByDateRange') ?>',
-            //     type: '',
-            //     data: { start_date: startDate, end_date: endDate },
-            //     dataType: 'json',
-            //     success: function (data) {
-            //         // Clear existing data in the DataTable
-            //         dataTable.clear();
 
-            //         // Add new data to the DataTable
-            //         dataTable.rows.add(data);
+            // Update the URL to include the date parameters
+            var url = "<?= base_url('fetchDataBetweenDays') ?>?startDate=" + startDate + "&endDate=" + endDate;
 
-            //         // Redraw the DataTable
-            //         dataTable.draw();
-            //     },
-            //     error: function (error) {
-            //         console.error('Error fetching data', error);
-            //     }
-            // });
+            $.ajax({
+                url: url,
+                type: 'GET',
+                success: function (response) {
+                    console.log('Data Between Two Days:', response);
 
+                    // Separate filtered and unfiltered data
+                    var filteredData = response.filter(function (item) {
+                        // Your filtering condition here
+                        return item.someCondition;
+                    });
+
+                    // Clear existing DataTable rows
+                    var dataTable = $('#myTable').DataTable();
+                    dataTable.clear();
+
+                    // Append filtered data rows first
+                    filteredData.forEach(function (item) {
+                        dataTable.row.add([
+                            item.id,
+                            item.domain_name,
+                            item.domain_expiry,
+                            item.hosting_expiry,
+                            item.ssl_expiry,
+                            item.phone,
+                            item.client_name,
+                            item.email
+                        ]);
+                    });
+
+                    // Append unfiltered data rows
+                    response.forEach(function (item) {
+                        // Check if the item is not in the filtered data to avoid duplication
+                        if (!filteredData.includes(item)) {
+                            dataTable.row.add([
+                                item.id,
+                                item.domain_name,
+                                item.domain_expiry,
+                                item.hosting_expiry,
+                                item.ssl_expiry,
+                                item.phone,
+                                item.client_name,
+                                item.email
+                            ]);
+                        }
+                    });
+
+                    // Draw the DataTable
+                    dataTable.draw();
+                },
+                error: function (error) {
+                    console.error('Error fetching data', error);
+                }
+            });
         });
+
 
         // <!-- domain name hide or show  -->
         $('input[type="checkbox"]').on('change', function () {

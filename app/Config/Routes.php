@@ -30,4 +30,4 @@ $routes->post('/update_data', "HomeController::update_data");
 $routes->post('/sendRenewalEmail', 'HomeController::sendRenewalEmail');
 
 // fetch Data By Date Range
-$routes->post('/fetchDataByDateRange', 'HomeController::fetchDataByDateRange');
+$routes->get('/fetchDataBetweenDays', 'HomeController::fetchDataBetweenDays');
