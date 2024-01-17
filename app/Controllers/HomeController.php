@@ -480,17 +480,36 @@ class HomeController extends BaseController
         $email = new \App\Models\DomainInfoModel();
         $domainId = $this->request->getPost('domainId');
         $data = $email->find($domainId);
-        // var_dump($data);
+
+        // initalise the value and fetching the array data
+        $domainName = $data['domain_name'];
+        $domainExpiry = $data['domain_expiry'];
+        $domainRegisterDate = $data['domain_register'];
+        $domainEmail = $data['email'];
+        // print_r($dominName);
+
         $email = \Config\Services::email();
         $email->setFrom('saxenaaditi525@gmail.com', 'Savithru Technologies');
-        $email->setTo('shubhamgupta7082@gmail.com');
+        $email->setTo($domainEmail);
         $email->setSubject('Domain Subscription Expiry');
-        $email->setMessage("Hello,<br><br>Your domain subscription is expiring soon. Please renew before the expiry date.<br><br>Thank you.<br>Savithru Technologies");
+        $email->setMessage("Hello,<br><br>Your domain subscription: $domainName is expiring soon. Please renew before the expiry date: $domainExpiry.<br>Domain Registered on this date: $domainRegisterDate.<br><br>Thank you.<br>Savithru Technologies");
 
         // Send the email
         $email->send();
+
     }
 
+    public function fetchDataByDateRange()
+    {
+        $fetchDate = new \App\Models\DomainInfoModel();
+        $startDate = $this->request->getPost('start_date');
+        $endDate = $this->request->getPost('end_date');
+        // Fetch all data within the given date range
+        $data = $fetchDate->getAllData();
+
+        // Print the data (for demonstration purposes, you can format and display it as needed)
+        var_dump($data);
+    }
 
 }
 

@@ -26,5 +26,8 @@ $routes->post('/edit', 'HomeController::edit');
 // update the data
 $routes->post('/update_data', "HomeController::update_data");
 
-// 
+// send email
 $routes->post('/sendRenewalEmail', 'HomeController::sendRenewalEmail');
+
+// fetch Data By Date Range
+$routes->post('/fetchDataByDateRange', 'HomeController::fetchDataByDateRange');

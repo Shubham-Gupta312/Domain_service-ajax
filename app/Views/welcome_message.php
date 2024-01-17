@@ -672,9 +672,18 @@
                                                     <div class="conatiner-title">
                                                         <h3>List of Registered Domain's</h3>
                                                     </div>
-                                                    <div class="date-range me-auto" style="margin-left: 5rem">
-                                                        <input type="date" name="from_date" id="from_date">
-                                                        <input type="date" name="to_date" id="to_date">
+                                                    <div class="date-range me-auto"
+                                                        style="margin-left: 5rem; display:flex">
+                                                        <div class="start-date-range m-2">
+                                                            <label>From:</label><br>
+                                                            <input type="date" id="startDate">
+                                                        </div>
+                                                        <div class="to-date-range m-2">
+                                                            <label>To:</label><br>
+                                                            <input type="date" id="endDate"><br>
+                                                        </div>
+                                                        <button id="filterButton"
+                                                            class="btn btn-secondary m-4">Filter</button>
                                                     </div>
                                                     <div class="add_form">
                                                         <button type="button" data-bs-toggle="modal"
@@ -717,6 +726,35 @@
 
 
     <script>
+        //Filter data acc. to date range
+        var dataTable = $('#dataTable').DataTable();
+
+        $('#filterButton').on('click', function () {
+            var startDate = $('#startDate').val();
+            var endDate = $('#endDate').val();
+            console.log(startDate, endDate);
+            // $.ajax({
+            //     url: '<?= base_url('fetchDataByDateRange') ?>',
+            //     type: '',
+            //     data: { start_date: startDate, end_date: endDate },
+            //     dataType: 'json',
+            //     success: function (data) {
+            //         // Clear existing data in the DataTable
+            //         dataTable.clear();
+
+            //         // Add new data to the DataTable
+            //         dataTable.rows.add(data);
+
+            //         // Redraw the DataTable
+            //         dataTable.draw();
+            //     },
+            //     error: function (error) {
+            //         console.error('Error fetching data', error);
+            //     }
+            // });
+
+        });
+
         // <!-- domain name hide or show  -->
         $('input[type="checkbox"]').on('change', function () {
             var sslChecked = $('input[value="ssl"]').is(':checked');
@@ -990,7 +1028,7 @@
                                         url: "<?= base_url('sendRenewalEmail') ?>", // Update with your actual controller and method
                                         type: 'POST',
                                         data: {
-                                            'domainId':domainId
+                                            'domainId': domainId
                                         }, // or 'GET' depending on your server-side configuration
                                         success: function (response) {
                                             // Handle success, if needed
