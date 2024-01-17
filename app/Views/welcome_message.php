@@ -953,6 +953,7 @@
                     var rowNode = this.node();
 
                     // Fetch domain register date, expiry date, hosting expiry andd ssl expiry from the row data
+                    var domainId = rowData[0];
                     var domainRegister = rowData[9];
                     var domainExpiry = rowData[2];
                     var sslExpiry = rowData[4];
@@ -985,6 +986,21 @@
                                     $(this.node()).find('td:eq(8)').empty().append(renewButton);
 
                                     // trigger a email to registered email-id
+                                    $.ajax({
+                                        url: "<?= base_url('sendRenewalEmail') ?>", // Update with your actual controller and method
+                                        type: 'POST',
+                                        data: {
+                                            'domainId':domainId
+                                        }, // or 'GET' depending on your server-side configuration
+                                        success: function (response) {
+                                            // Handle success, if needed
+                                            // console.log('Email sent successfully');
+                                        },
+                                        error: function (error) {
+                                            // Handle error, if needed
+                                            // console.error('Error sending email', error);
+                                        }
+                                    });
                                 } else {
                                     // Show "View" for other cases
                                     $(this.node()).find('td:eq(8)');
@@ -1001,7 +1017,7 @@
         // <!-- for edit the data and renewal modal open-->
         $(document).on('click', '.renew-button', function () {
             // console.log('Renew button clicked');
-             var table = $('#myTable').DataTable();
+            var table = $('#myTable').DataTable();
             // Get the clicked row
             var row = $(this).closest('tr');
             // Get the data for the clicked row
@@ -1023,11 +1039,11 @@
                     var DomainExpiry = response.domain.domain_expiry;
                     var DomainRegestration = response.domain.domain_register;
                     // console.log(DomainName); 
-                        $('#RdomainName').val(DomainName);
-                        $('#domain_regs').val(DomainRegestration);
-                        // console.log(domReg);
-                        $('#domain_exp').val(DomainExpiry);
-                        $('#renewModal').modal('show');
+                    $('#RdomainName').val(DomainName);
+                    $('#domain_regs').val(DomainRegestration);
+                    // console.log(domReg);
+                    $('#domain_exp').val(DomainExpiry);
+                    $('#renewModal').modal('show');
                 }
             });
         });
@@ -1037,7 +1053,7 @@
         $('#update').click(function (e) {
             e.preventDefault();
             // console.log('clicked');
-            
+
             var data = {
                 'id': $('#domain_id').val(),
                 'domain_regs': $('#domain_regs').val(),

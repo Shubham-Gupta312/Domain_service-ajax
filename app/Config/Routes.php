@@ -25,3 +25,6 @@ $routes->post('/view_data', 'HomeController::view_data');
 $routes->post('/edit', 'HomeController::edit');
 // update the data
 $routes->post('/update_data', "HomeController::update_data");
+
+// 
+$routes->post('/sendRenewalEmail', 'HomeController::sendRenewalEmail');

@@ -475,5 +475,22 @@ class HomeController extends BaseController
 
     }
 
+    public function sendRenewalEmail()
+    {
+        $email = new \App\Models\DomainInfoModel();
+        $domainId = $this->request->getPost('domainId');
+        $data = $email->find($domainId);
+        // var_dump($data);
+        $email = \Config\Services::email();
+        $email->setFrom('saxenaaditi525@gmail.com', 'Savithru Technologies');
+        $email->setTo('shubhamgupta7082@gmail.com');
+        $email->setSubject('Domain Subscription Expiry');
+        $email->setMessage("Hello,<br><br>Your domain subscription is expiring soon. Please renew before the expiry date.<br><br>Thank you.<br>Savithru Technologies");
+
+        // Send the email
+        $email->send();
+    }
+
+
 }
 
