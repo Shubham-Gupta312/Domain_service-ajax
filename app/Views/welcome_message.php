@@ -740,53 +740,53 @@
                 type: 'GET',
                 success: function (response) {
                     console.log('Data Between Two Days:', response);
+                    // Clear existing DataTable
+                    $('#myTable').DataTable().clear().destroy();
 
-                    // Separate filtered and unfiltered data
-                    var filteredData = response.filter(function (item) {
-                        // Your filtering condition here
-                        return item.someCondition;
-                    });
+                    if (response.length > 0) {
+                        // Reinitialize DataTable with new data
+                        $('#myTable').DataTable({
+                            data: response,
+                            columns: [
+                                // Define your columns based on the response data
+                                { data: 'id' },
+                                { data: 'domain_name' },
+                                { data: 'domain_expiry' },
+                                { data: 'hosting_expiry' },
+                                { data: 'ssl_expiry' },
+                                { data: 'phone' },
+                                { data: 'client_name' },
+                                { data: 'email' },
+                                {
+                                    // Add a custom column for "View" or "Renew" link
+                                    data: null,
+                                    render: function (data, type, row) {
+                                        // Check if domain_expiry is within 30 days
+                                        var expiryDate = new Date(row.domain_expiry);
+                                        var currentDate = new Date();
+                                        var thirtyDaysFromNow = new Date();
+                                        thirtyDaysFromNow.setDate(currentDate.getDate() + 30);
 
-                    // Clear existing DataTable rows
-                    var dataTable = $('#myTable').DataTable();
-                    dataTable.clear();
+                                        if (expiryDate <= thirtyDaysFromNow) {
+                                            // Display "Renew" button
+                                            return '<button class="renew-button btn btn-info" data-domain-id="' + row.id + '">Renew</button>';
+                                        } else {
+                                            // Display "View" link
+                                            return '<a href="#" data-bs-toggle="modal" data-bs-target="#viewModal" class="view" data-domain-id="' + row.id + '">View</a>';
+                                        }
+                                    }
+                                }
+                            ],
 
-                    // Append filtered data rows first
-                    filteredData.forEach(function (item) {
-                        dataTable.row.add([
-                            item.id,
-                            item.domain_name,
-                            item.domain_expiry,
-                            item.hosting_expiry,
-                            item.ssl_expiry,
-                            item.phone,
-                            item.client_name,
-                            item.email
-                        ]);
-                    });
-
-                    // Append unfiltered data rows
-                    response.forEach(function (item) {
-                        // Check if the item is not in the filtered data to avoid duplication
-                        if (!filteredData.includes(item)) {
-                            dataTable.row.add([
-                                item.id,
-                                item.domain_name,
-                                item.domain_expiry,
-                                item.hosting_expiry,
-                                item.ssl_expiry,
-                                item.phone,
-                                item.client_name,
-                                item.email
-                            ]);
-                        }
-                    });
-
-                    // Draw the DataTable
-                    dataTable.draw();
+                        });
+                    } else {
+                        // If no data, display a message
+                        $('#myTable').html('<p style="text-align: center; font-weight: bold; color: #000; font-size: 16px;">No data found</p>');
+                    }
                 },
-                error: function (error) {
-                    console.error('Error fetching data', error);
+                error: function () {
+                    // Handle AJAX error here
+                    console.error('Error fetching data');
                 }
             });
         });
@@ -1028,6 +1028,7 @@
                     var rowNode = this.node();
 
                     // Fetch domain register date, expiry date, hosting expiry andd ssl expiry from the row data
+                    var domainName = rowData[1];
                     var domainId = rowData[0];
                     var domainRegister = rowData[9];
                     var domainExpiry = rowData[2];
@@ -1048,7 +1049,7 @@
                             } else {
                                 const difference = Math.abs(endDate - startDate);
                                 const differenceInDays = Math.ceil(difference / (1000 * 60 * 60 * 24));
-                                // console.log(`startDate: ${domainRegister}, expiryDate: ${domainExpiry}, The domain will expire in ${differenceInDays} days.`);
+                                // console.log(`Domian Name: ${domainName} startDate: ${domainRegister}, expiryDate: ${domainExpiry}, The domain will expire in ${differenceInDays} days.`);
 
                                 if (differenceInDays <= 30) {
                                     // Apply red color and show relevant information
@@ -1076,7 +1077,8 @@
                                             // console.error('Error sending email', error);
                                         }
                                     });
-                                } else {
+                                }
+                                else {
                                     // Show "View" for other cases
                                     $(this.node()).find('td:eq(8)');
                                 }

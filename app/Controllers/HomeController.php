@@ -512,9 +512,9 @@ class HomeController extends BaseController
         $data = $fetchDate->getDataBetweenDays($startDate, $endDate);
 
         // Print the data (for demonstration purposes, you can format and display it as needed)
-        //     echo '<pre>';
-        //     print_r($data);
-        //     echo '</pre>';
+            // echo '<pre>';
+            // print_r($data);
+            // echo '</pre>';
         // Send the data as JSON response
         return $this->response->setJSON($data);
     }
