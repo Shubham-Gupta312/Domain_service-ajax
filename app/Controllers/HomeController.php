@@ -263,6 +263,12 @@ class HomeController extends BaseController
                         'required' => 'Hosting Expiry Date is required',
                     ]
                 ],
+                'hosting_register' => [
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => 'Hosting Register Date is required',
+                    ]
+                ],
                 'hosting_cost' => [
                     'rules' => 'required',
                     'errors' => [
@@ -287,7 +293,7 @@ class HomeController extends BaseController
             $data['hosting_space'] = $this->request->getPost('hosting_space');
             $data['hosting_expiry'] = $this->request->getPost('hosting_expiry');
             $data['hosting_cost'] = $this->request->getPost('hosting_cost');
-            // $data['domainName'] = $this->request->getPost('domainName');
+            $data['hosting_register'] = $this->request->getPost('hosting_register');
             // Collect other hosting related fields here
         }
 
@@ -298,6 +304,12 @@ class HomeController extends BaseController
                     'rules' => 'required',
                     'errors' => [
                         'required' => 'SSL Expiry date is required',
+                    ]
+                ],
+                'ssl_register' => [
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => 'SSL Register date is required',
                     ]
                 ],
                 'ssl_cost' => [
@@ -331,7 +343,7 @@ class HomeController extends BaseController
             }
 
             // Gather data for 'ssl' checkbox
-            // $data['domain-Name'] = $this->request->getPost('domain-Name');
+            $data['ssl_register'] = $this->request->getPost('ssl_register');
             $data['ssl_expiry'] = $this->request->getPost('ssl_expiry');
             $data['ssl_cost'] = $this->request->getPost('ssl_cost');
             // Collect other ssl related fields here
@@ -457,6 +469,10 @@ class HomeController extends BaseController
             // 'domain_name' => $this->request->getPost('RdomainName'),
             'domain_register' => $this->request->getPost('domain_regs'),
             'domain_expiry' => $this->request->getPost('domain_exp'),
+            'hosting_register' => $this->request->getPost('hosting_regs'),
+            'hosting_expiry ' => $this->request->getPost('hosting_exp'),
+            'ssl_register ' => $this->request->getPost('ssl_regs'),
+            'ssl_expiry ' => $this->request->getPost('ssl_exp'),
         ];
         // / Debugging: Check data before update
         // var_dump($data);

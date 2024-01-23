@@ -316,6 +316,7 @@
                                         <div class="container" id="hostingContainer" style="display: none;">
                                             <h3>Hosting Information</h3>
                                             <div class="row">
+
                                                 <div class="col-md-5">
                                                     <div class="mb-3">
                                                         <label for="expiryDate" class="form-label">Expiry
@@ -336,6 +337,14 @@
                                                 </div>
                                                 <div class="col-md-5">
                                                     <div class="mb-3">
+                                                        <label for="expiryDate" class="form-label">Hosting Register
+                                                            Date</label><span class="text-danger">*</span>
+                                                        <input type="date" class="form-control" name="hosting_register"
+                                                            id="hosting_register">
+                                                        <div class="invalid-feedback" class="text-danger"
+                                                            id="hosting_register_msg"></div>
+                                                    </div>
+                                                    <div class="mb-3">
                                                         <label for="hostingCost" class="form-label">Hosting Cost
                                                             (&#x20B9;)</label><span class="text-danger">*</span>
                                                         <input type="text" class="form-control" id="hosting_cost"
@@ -343,6 +352,8 @@
                                                         <div class="invalid-feedback" class="text-danger"
                                                             id="hosting_cost_msg"></div>
                                                     </div>
+                                                </div>
+                                                <div class="col-md-5">
                                                     <div class="mb-3">
                                                         <label for="hostingCost" id="hostlabelDomain"
                                                             class="form-label">Domain Name</label><span
@@ -360,6 +371,16 @@
                                     <div class="container" id="sslContainer" style="display: none;">
                                         <h3>SSL</h3>
                                         <div class="row">
+                                            <div class="col-md-5">
+                                                <div class="mb-3">
+                                                    <label for="expiryDate" class="form-label">SSL Register
+                                                        Date</label><span class="text-danger">*</span>
+                                                    <input type="date" class="form-control" id="ssl_register"
+                                                        name="ssl_register">
+                                                    <div class="invalid-feedback" class="text-danger"
+                                                        id="ssl_register_msg"></div>
+                                                </div>
+                                            </div>
                                             <div class="col-md-5">
                                                 <div class="mb-3">
                                                     <label for="expiryDate" class="form-label">SSL Expiry
@@ -549,8 +570,12 @@
                                                         (&#x20B9;)</label>
                                                     <input type="text" class="form-control" readonly id="Vhosting_cost"
                                                         name="hosting_cost">
-                                                    <div class="invalid-feedback" class="text-danger"
-                                                        id="hosting_cost_msg"></div>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="hostingCost" class="form-label">Hosting Register
+                                                        Date</label>
+                                                    <input type="date" class="form-control" readonly
+                                                        id="Vhosting_register" name="hosting_register">
                                                 </div>
 
                                             </div>
@@ -560,19 +585,17 @@
                                         <h3>SSL</h3>
                                         <div class="row">
                                             <div class="col-md-5">
-                                                <!-- Left Column -->
-                                                <!-- <div class="mb-3">
-                                                    <label for="domainName" class="form-label">Domain Name</label>
-                                                    <input type="text" class="form-control" readonly id="domainName"
-                                                        name="domain_Name">
-                                                </div> -->
                                                 <div class="mb-3">
                                                     <label for="expiryDate" class="form-label">SSL Expiry
                                                         Date</label>
                                                     <input type="date" class="form-control" readonly id="Vssl_expiry"
                                                         name="ssl_expiry">
-                                                    <div class="invalid-feedback" class="text-danger"
-                                                        id="ssl_expiry_msg"></div>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="expiryDate" class="form-label">SSL Register
+                                                        Date</label>
+                                                    <input type="date" class="form-control" readonly id="Vssl_register"
+                                                        name="ssl_register">
                                                 </div>
                                             </div>
                                             <div class="col-md-5">
@@ -613,7 +636,7 @@
                                 <div class="container">
                                     <div class="row">
                                         <h2>Domain Renew Info:</h2>
-                                        <div class="col-md-3">
+                                        <div class="col-md-6">
                                             <!-- Left Column -->
                                             <input type="hidden" name="id" id="domain_id">
                                             <div class="mb-3">
@@ -633,14 +656,36 @@
                                             </div>
                                             <!-- More domain-related fields can go here -->
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-6">
                                             <!-- Right Column -->
                                             <div class="mb-3">
                                                 <label for="expiryDate" class="form-label">Domain Expiry Date</label>
                                                 <input type="date" name="domain_exp" id="domain_exp"
                                                     class="form-control">
-                                                <div class="invalid-feedback" class="text-danger" id="domain_exp_msg">
-                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="regDate" class="form-label">Hosting Registration
+                                                    Date</label>
+                                                <input type="date" name="hosting_regs" id="hosting_regs"
+                                                    class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="expiryDate" class="form-label">Hosting Expiry Date</label>
+                                                <input type="date" name="hosting_exp" id="hosting_exp"
+                                                    class="form-control">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="regDate" class="form-label">SSL Registration Date</label>
+                                                <input type="date" name="ssl_regs" id="ssl_regs" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="expiryDate" class="form-label">SSL Expiry Date</label>
+                                                <input type="date" name="ssl_exp" id="ssl_exp"
+                                                    class="form-control">
                                             </div>
                                         </div>
                                     </div>
@@ -830,13 +875,13 @@
         });
 
         // <!--  Modal container adjust css -->
-        $('input[type="checkbox"]').on('change', function () {
-            if ($('input[type="checkbox"]:checked').length > 0) {
-                $('.modal-scroll').css('overflow-y', 'scroll');
-            } else {
-                $('.modal-scroll').css('overflow-y', 'auto');
-            }
-        });
+        // $('input[type="checkbox"]').on('change', function () {
+        //     if ($('input[type="checkbox"]:checked').length > 0) {
+        //         $('.modal-scroll').css('overflow-y', 'scroll');
+        //     } else {
+        //         $('.modal-scroll').css('overflow-y', 'auto');
+        //     }
+        // });
 
         // <!--  Hide/Show Container  -->
         $('.checkbox').change(function () {
@@ -932,9 +977,11 @@
                         var companyName = response.domainInfo.company_name;
                         var domainRenew = response.domainInfo.domain_renew;
                         var clientName = response.domainInfo.client_name;
+                        var hostingRegister = response.domainInfo.hosting_register;
                         var hostingExpiry = response.domainInfo.hosting_expiry;
                         var hostingSpace = response.domainInfo.hosting_space;
                         var hostingCost = response.domainInfo.hosting_cost;
+                        var sslRegister = response.domainInfo.ssl_register;
                         var sslExpiry = response.domainInfo.ssl_expiry;
                         var sslCost = response.domainInfo.ssl_cost;
 
@@ -949,9 +996,11 @@
                         $('#Vcompany_name').val(companyName);
                         $('#Vdomain_renew').val(domainRenew);
                         $('#Vclient_name').val(clientName);
+                        $('#Vhosting_register').val(hostingRegister);
                         $('#Vhosting_expiry').val(hostingExpiry);
                         $('#Vhosting_space').val(hostingSpace);
                         $('#Vhosting_cost').val(hostingCost);
+                        $('#Vssl_register').val(sslRegister);
                         $('#Vssl_expiry').val(sslExpiry);
                         $('#Vssl_cost').val(sslCost);
                         $("#viewModal").modal('show');
@@ -1115,11 +1164,20 @@
                     var DomainName = response.domain.domain_name;
                     var DomainExpiry = response.domain.domain_expiry;
                     var DomainRegestration = response.domain.domain_register;
+                    var HostingRegister = response.domain.hosting_register;
+                    var HostingExpiry = response.domain.hosting_expiry;
+                    var sslRegister = response.domain.ssl_register;
+                    var sslExpiry = response.domain.ssl_expiry;
                     // console.log(DomainName); 
                     $('#RdomainName').val(DomainName);
                     $('#domain_regs').val(DomainRegestration);
                     // console.log(domReg);
                     $('#domain_exp').val(DomainExpiry);
+                    $('#hosting_regs').val(HostingRegister);
+                    $('#hosting_exp').val(HostingExpiry);
+                    $('#ssl_regs').val(sslRegister);
+                    $('#ssl_exp').val(sslExpiry);
+                    
                     $('#renewModal').modal('show');
                 }
             });
@@ -1135,6 +1193,10 @@
                 'id': $('#domain_id').val(),
                 'domain_regs': $('#domain_regs').val(),
                 'domain_exp': $('#domain_exp').val(),
+                'hosting_regs': $('#hosting_regs').val(),
+                'hosting_exp': $('#hosting_exp').val(),
+                'ssl_regs': $('#ssl_regs').val(),
+                'ssl_exp': $('#ssl_exp').val(),
             };
             // console.log(data); // Log data before sending
             $.ajax({
