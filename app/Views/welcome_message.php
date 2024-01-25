@@ -684,8 +684,7 @@
                                         <div class="col-md-6">
                                             <div class="mb-3">
                                                 <label for="expiryDate" class="form-label">SSL Expiry Date</label>
-                                                <input type="date" name="ssl_exp" id="ssl_exp"
-                                                    class="form-control">
+                                                <input type="date" name="ssl_exp" id="ssl_exp" class="form-control">
                                             </div>
                                         </div>
                                     </div>
@@ -1077,12 +1076,14 @@
                     var rowNode = this.node();
 
                     // Fetch domain register date, expiry date, hosting expiry andd ssl expiry from the row data
-                    var domainName = rowData[1];
                     var domainId = rowData[0];
-                    var domainRegister = rowData[9];
+                    var domainName = rowData[1];
                     var domainExpiry = rowData[2];
-                    var sslExpiry = rowData[4];
                     var hostingExpiry = rowData[3];
+                    var sslExpiry = rowData[4];
+                    var domainRegister = rowData[9];
+                    var hostingRegister = rowData[10];
+                    var sslRegister = rowData[11];
                     // Check if both domainRegister and domainExpiry are present
                     if (domainRegister && domainExpiry) {
                         const startDate = new Date(domainRegister);
@@ -1094,7 +1095,7 @@
                         if (!isNaN(startDate.getTime()) && !isNaN(endDate.getTime())) {
                             if (endDate < today) {
                                 // The domain has expired. Please renew it.
-                                $(rowNode).find('td:eq(9)').css('color', 'red').text('The domain has expired.');
+                                $(rowNode).find('td:eq(2)').css('color', 'red').text('The domain has expired.');
                             } else {
                                 const difference = Math.abs(endDate - startDate);
                                 const differenceInDays = Math.ceil(difference / (1000 * 60 * 60 * 24));
@@ -1119,11 +1120,11 @@
                                         }, // or 'GET' depending on your server-side configuration
                                         success: function (response) {
                                             // Handle success, if needed
-                                            // console.log('Email sent successfully');
+                                            console.log('Email sent successfully');
                                         },
                                         error: function (error) {
                                             // Handle error, if needed
-                                            // console.error('Error sending email', error);
+                                            console.error('Error sending email', error);
                                         }
                                     });
                                 }
@@ -1134,6 +1135,104 @@
                             }
                         }
                     }
+                    // End of domain 
+                    // Check if both hosting Register and hostingExpiry are present
+                    if (hostingRegister && hostingExpiry) {
+                        const HostStartDate = new Date(hostingRegister);
+                        const HostEndDate = new Date(hostingExpiry);
+                        const today = new Date();
+                        // console.log(domainRegister, 'startDate');
+                        // console.log(domainExpiry, 'expiryDate');
+
+                        if (!isNaN(HostStartDate.getTime()) && !isNaN(HostEndDate.getTime())) {
+                            if (HostEndDate < today) {
+                                // The domain has expired. Please renew it.
+                                $(rowNode).find('td:eq(3)').css('color', 'red').text('The Hosting has expired.');
+                            } else {
+                                const difference = Math.abs(HostEndDate - HostStartDate);
+                                const differenceInDays = Math.ceil(difference / (1000 * 60 * 60 * 24));
+                                // console.log(`Domian Name: ${domainName} startDate: ${hostingRegister}, expiryDate: ${hostingExpiry}, The Hosting will expire in ${differenceInDays} days.`);
+
+                                if (differenceInDays <= 30) {
+                                    // Apply red color and show relevant information
+                                    $(rowNode).find('td:eq(3)').css('color', 'red').html(`${formatDate(hostingExpiry)}<br>${differenceInDays} days`);
+
+                                    // Create a Renew button
+                                    var renewButton = $('<button>').text('Renew').addClass('renew-button btn btn-info');
+                                    // Append the Renew button to the last column
+                                    // console.log(renewButton);
+                                    $(this.node()).find('td:eq(8)').empty().append(renewButton);
+
+                                    // trigger a email to registered email-id
+                                    $.ajax({
+                                        url: "<?= base_url('sendRenewalEmail') ?>", // Update with your actual controller and method
+                                        type: 'POST',
+                                        data: {
+                                            'domainId': domainId
+                                        },
+                                        success: function (response) {
+                                            console.log('Email sent successfully');
+                                        },
+                                        error: function (error) {
+                                            console.error('Error sending email', error);
+                                        }
+                                    });
+                                }
+                                else {
+                                    $(this.node()).find('td:eq(8)');
+                                }
+                            }
+                        }
+                    }
+                    // End of hosting
+                    // Check if both sslRegister and sslExpiry are present
+                    if (sslRegister && sslExpiry) {
+                        const SSLstartDate = new Date(sslRegister);
+                        const SSLendDate = new Date(sslExpiry);
+                        const today = new Date();
+
+                        if (!isNaN(SSLstartDate.getTime()) && !isNaN(SSLendDate.getTime())) {
+                            if (SSLendDate < today) {
+                                // The domain has expired. Please renew it.
+                                $(rowNode).find('td:eq(4)').css('color', 'red').text('The SSL has expired.');
+                            } else {
+                                const difference = Math.abs(SSLendDate - SSLstartDate);
+                                const differenceInDays = Math.ceil(difference / (1000 * 60 * 60 * 24));
+                                // console.log(`Domian Name: ${domainName} startDate: ${sslRegister}, expiryDate: ${sslExpiry}, The SSl will expire in ${differenceInDays} days.`);
+
+                                if (differenceInDays <= 30) {
+                                    // Apply red color and show relevant information
+                                    $(rowNode).find('td:eq(4)').css('color', 'red').html(`${formatDate(sslExpiry)}<br>${differenceInDays} days`);
+
+                                    // Create a Renew button
+                                    var renewButton = $('<button>').text('Renew').addClass('renew-button btn btn-info');
+                                    // Append the Renew button to the last column
+                                    // console.log(renewButton);
+                                    $(this.node()).find('td:eq(8)').empty().append(renewButton);
+
+                                    // trigger a email to registered email-id
+                                    $.ajax({
+                                        url: "<?= base_url('sendRenewalEmail') ?>", // Update with your actual controller and method
+                                        type: 'POST',
+                                        data: {
+                                            'domainId': domainId
+                                        },
+                                        success: function (response) {
+                                            // console.log('Email sent successfully');
+                                        },
+                                        error: function (error) {
+                                            // console.error('Error sending email', error);
+                                        }
+                                    });
+                                }
+                                else {
+                                    $(this.node()).find('td:eq(8)');
+                                }
+                            }
+                        }
+                    }
+                    // End of SSL
+
                 });
             }
 
@@ -1177,7 +1276,7 @@
                     $('#hosting_exp').val(HostingExpiry);
                     $('#ssl_regs').val(sslRegister);
                     $('#ssl_exp').val(sslExpiry);
-                    
+
                     $('#renewModal').modal('show');
                 }
             });

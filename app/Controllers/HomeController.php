@@ -423,6 +423,8 @@ class HomeController extends BaseController
                 7 => $row['email'],
                 8 => '<a href="#" data-bs-toggle="modal" data-bs-target="#viewModal" class="view">View</a>',
                 9 => $row['domain_register'],
+                10 => $row['hosting_register'],
+                11 => $row['ssl_register'],
             );
         }
 
@@ -496,22 +498,91 @@ class HomeController extends BaseController
         $email = new \App\Models\DomainInfoModel();
         $domainId = $this->request->getPost('domainId');
         $data = $email->find($domainId);
+        // print_r($data);
+        try {
+            // initalise the value and fetching the array data
+            $domainName = $data['domain_name'];
+            $domainExpiry = strtotime($data['domain_expiry']);
+            $domainRegisterDate = strtotime($data['domain_register']);
+            $domainEmail = $data['email'];
 
-        // initalise the value and fetching the array data
-        $domainName = $data['domain_name'];
-        $domainExpiry = $data['domain_expiry'];
-        $domainRegisterDate = $data['domain_register'];
-        $domainEmail = $data['email'];
-        // print_r($dominName);
+            $hostingRegisterDate = strtotime($data['hosting_register']);
+            $hostingExpiry = strtotime($data['hosting_expiry']);
+            $hostingEmail = $data['email'];
 
-        $email = \Config\Services::email();
-        $email->setFrom('saxenaaditi525@gmail.com', 'Savithru Technologies');
-        $email->setTo($domainEmail);
-        $email->setSubject('Domain Subscription Expiry');
-        $email->setMessage("Hello,<br><br>Your domain subscription: $domainName is expiring soon. Please renew before the expiry date: $domainExpiry.<br>Domain Registered on this date: $domainRegisterDate.<br><br>Thank you.<br>Savithru Technologies");
+            $sslRegisterDate = strtotime($data['ssl_register']);
+            $sslExpiry = strtotime($data['ssl_expiry']);
+            $sslEmail = $data['email'];
 
-        // Send the email
-        $email->send();
+            $dmnExpDiff = $domainExpiry - $domainRegisterDate;
+            $hstExpDiff = $hostingExpiry - $hostingRegisterDate;
+            $sslExpDiff = $sslExpiry - $sslRegisterDate;
+
+            $email = \Config\Services::email();
+
+            // send mail according to their condition meet
+            if (!empty($domainRegisterDate) && !empty($domainExpiry)) {
+                if ($dmnExpDiff <= 30 * 24 * 60 * 60) {
+                    $email->setFrom('saxenaaditi525@gmail.com', 'Savithru Technologies');
+                    $email->setTo($domainEmail);
+                    $email->setSubject('Domain Subscription Expiry');
+
+                    $message = "Hello,<br><br>Your domain subscription: $domainName is expiring soon. Please renew before the expiry date: $data[domain_expiry].<br>Domain Registered on this date: $data[domain_register].<br><br>Thank you.<br>Savithru Technologies";
+
+                    $email->setMessage($message);
+
+                    // Send the email
+                    if ($email->send()) {
+                        echo 'Domain Email sent successfully';
+                    } else {
+                        echo 'Domain Email failed to send';
+                        print_r($email->printDebugger(['headers']));
+                    }
+                }
+            }
+
+            if (!empty($hostingRegisterDate) && !empty($hostingExpiry)) {
+                if ($hstExpDiff <= 30 * 24 * 60 * 60) {
+                    $email->setFrom('saxenaaditi525@gmail.com', 'Savithru Technologies');
+                    $email->setTo($hostingEmail);
+                    $email->setSubject('Hosting Subscription Expiry');
+
+                    $message = "Hello,<br><br>Your Hosting subscription: $domainName is expiring soon. Please renew before the expiry date: $data[hosting_expiry].<br>Hosting Registered on this date: $data[hosting_register].<br><br>Thank you.<br>Savithru Technologies";
+
+                    $email->setMessage($message);
+
+                    // Send the email
+                    if ($email->send()) {
+                        echo 'Hosting Email sent successfully';
+                    } else {
+                        echo 'Hosting Email failed to send';
+                        print_r($email->printDebugger(['headers']));
+                    }
+                }
+            }
+
+            if (!empty($sslRegisterDate) && !empty($sslExpiry)) {
+                if ($sslExpDiff <= 30 * 24 * 60 * 60) {
+                    $email->setFrom('saxenaaditi525@gmail.com', 'Savithru Technologies');
+                    $email->setTo($sslEmail);
+                    $email->setSubject('SSL Subscription Expiry');
+
+                    $message = "Hello,<br><br>Your SSL subscription: $domainName is expiring soon. Please renew before the expiry date: $data[ssl_expiry].<br>SSL Registered on this date: $data[ssl_register].<br><br>Thank you.<br>Savithru Technologies";
+
+                    $email->setMessage($message);
+
+                    // Send the email
+                    if ($email->send()) {
+                        echo 'SSL Email sent successfully';
+                    } else {
+                        echo 'SSL Email failed to send';
+                        print_r($email->printDebugger(['headers']));
+                    }
+                }
+            }
+        } catch (\Exception $e) {
+            echo 'Caught exception: ', $e->getMessage();
+        }
 
     }
 
@@ -528,9 +599,9 @@ class HomeController extends BaseController
         $data = $fetchDate->getDataBetweenDays($startDate, $endDate);
 
         // Print the data (for demonstration purposes, you can format and display it as needed)
-            // echo '<pre>';
-            // print_r($data);
-            // echo '</pre>';
+        // echo '<pre>';
+        // print_r($data);
+        // echo '</pre>';
         // Send the data as JSON response
         return $this->response->setJSON($data);
     }
