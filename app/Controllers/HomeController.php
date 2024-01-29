@@ -472,9 +472,9 @@ class HomeController extends BaseController
             'domain_register' => $this->request->getPost('domain_regs'),
             'domain_expiry' => $this->request->getPost('domain_exp'),
             'hosting_register' => $this->request->getPost('hosting_regs'),
-            'hosting_expiry ' => $this->request->getPost('hosting_exp'),
-            'ssl_register ' => $this->request->getPost('ssl_regs'),
-            'ssl_expiry ' => $this->request->getPost('ssl_exp'),
+            'hosting_expiry' => $this->request->getPost('hosting_exp'),
+            'ssl_register' => $this->request->getPost('ssl_regs'),
+            'ssl_expiry' => $this->request->getPost('ssl_exp'),
         ];
         // / Debugging: Check data before update
         // var_dump($data);
@@ -488,6 +488,7 @@ class HomeController extends BaseController
             return $this->response->setJSON($message);
         } else {
             $message = ['status' => 'success', 'message' => "Data Updated Successfully!"];
+            // print_r($data['ssl_register']);
             return $this->response->setJSON($message);
         }
 

@@ -440,7 +440,7 @@ $(document).ready(function () {
                                 $(rowNode).find('td:eq(4)').css('color', 'red').html(`${formatDate(sslExpiry)}<br>${differenceInDays} days`);
 
                                 // Create a Renew button
-                                var renewButton = $('<button>').text('Renew').addClass('renew-button btn btn-info');
+                                var renewButton = $('<button>').text('Renew').addClass('renew-button renew-mail btn btn-info');
                                 // Append the Renew button to the last column
                                 // console.log(renewButton);
                                 $(this.node()).find('td:eq(8)').empty().append(renewButton);
@@ -448,7 +448,7 @@ $(document).ready(function () {
                                 // trigger a email to registered email-id
                                 $.ajax({
                                     // url: "<?= base_url('sendRenewalEmail') ?>", // Update with your actual controller and method
-                                    url: "sendRenewalEmail", 
+                                    url: "sendRenewalEmail",
                                     type: 'POST',
                                     data: {
                                         'domainId': domainId
